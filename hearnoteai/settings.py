@@ -25,7 +25,10 @@ SECRET_KEY = 'django-insecure-crl!8gk0w!b2o(ikyj@7p*+*t&o!jymdh1w2#=ev0^l^v3mae7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["*"]
+ALLOWED_HOSTS = [
+    "heartnote-ai.onrender.com",
+]
+
 
 
 # Application definition
