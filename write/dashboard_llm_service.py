@@ -221,9 +221,10 @@ class Dashboard_LLM_Service:
 
         if os.environ.get("RENDER"):
             return {
-        "response": "⚠️ AI generation is disabled on cloud deployment.",
-        "blocked": True
+        "response": "⚠️ AI generation is available only in local mode.",
+        "blocked": False
         }
+
 
 
 
