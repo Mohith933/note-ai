@@ -27,7 +27,17 @@ DEBUG = True
 
 ALLOWED_HOSTS = [
     "heartnote-ai.onrender.com",
+    "localhost",
+    "127.0.0.1"
 ]
+
+CSRF_TRUSTED_ORIGINS = [
+    "https://heartnote-ai.onrender.com"
+]
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
 
 IS_PRODUCTION = os.environ.get("RENDER", False)
 
