@@ -48,20 +48,23 @@ def generate_text(request):
 
 
 def generate_dashboard(request):
-    mode = request.GET.get("mode")      # reflection / letter / note / etc.
-    name = request.GET.get("name", "")  # optional
-    desc = request.GET.get("desc", "")  # required
-    tone = request.GET.get("tone", "soft")
+    mode = request.GET.get("mode")
+    name = request.GET.get("name", "")
+    desc = request.GET.get("desc", "")
+    depth = request.GET.get("depth", "light")
     language = request.GET.get("language", "en")
-    
 
     if not mode or not desc:
-        return JsonResponse({"response": "⚠️ Missing mode or description."})
-    
-    
+        return JsonResponse({"response": "Please write something."})
 
-    output = dashboard_llm.generate(mode, name, desc, tone,language)
-    return JsonResponse({"response": output})
+    result = dashboard_llm.generate(mode, name, desc, depth, language)
+
+    # ✅ RETURN STRING ONLY
+    return JsonResponse({"response": result})
+
+
+
+
 
 
 
