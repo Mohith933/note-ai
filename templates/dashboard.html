@@ -1301,7 +1301,7 @@
             document.getElementById("workspaceView").classList.add("active");
         }
 
-        // 🔙 Go back and save current state (only if not viewing an old one)
+         // 🔙 Go back and save current state (only if not viewing an old one)
         function goBack() {
     const state = document.getElementById("state");
 
@@ -1332,42 +1332,44 @@
     library.style.display = "block";
     showRecents();
 }
+      let typingTimer = null;
 
-        function emotionalTypeWrite(text, elementId, depth = "medium") {
+function emotionalTypeWrite(text, elementId, depth = "medium") {
     const el = document.getElementById(elementId);
+    if (!el) return;
 
-    // ✅ HARD GUARD (THIS STOPS VANISH)
-    if (typeof text !== "string" || !text.trim()) {
-        el.textContent = "⚠️ No content generated.";
-        return;
+    // 🔒 HARD STRING GUARANTEE
+    const safeText = typeof text === "string" ? text.trim() : "";
+
+    // Clear previous typing
+    if (typingTimer) {
+        clearTimeout(typingTimer);
+        typingTimer = null;
     }
 
     el.textContent = "";
+
+    if (!safeText) {
+        el.textContent = "The words are still forming.";
+        return;
+    }
+
+    const speed =
+        depth === "deep" ? 80 :
+        depth === "light" ? 35 : 55;
+
     let i = 0;
 
-    let speed;
-    if (depth === "deep") speed = 70;
-    else if (depth === "light") speed = 35;
-    else speed = 50;
-
-    function type() {
-        if (i < text.length) {
-            el.textContent += text.charAt(i);
+    function typeNext() {
+        if (i < safeText.length) {
+            el.textContent += safeText.charAt(i);
             i++;
-            const pause = (i % 5 === 0) ? speed * 1.4 : speed;
-            setTimeout(type, pause);
+            typingTimer = setTimeout(typeNext, speed);
         }
     }
 
-    type();
+    typeNext();
 }
-
-function hasBadWords(text) {
-    const badWords = ["fuck", "shit", "bitch", "asshole", "slut", "dick"];
-    const t = text.toLowerCase();
-    return badWords.some(w => t.includes(w));
-}
-
 
 
 async function generateContent() {
@@ -1376,53 +1378,32 @@ async function generateContent() {
     const depth = document.getElementById("depthInput").value;
     const mode = document.getElementById("toolTitle").innerText.toLowerCase();
 
-    const outputBox = document.getElementById("output");
-
-    // ❗ Required fields
-    if (!name || !desc) {
-        alert("Please enter both title and description 💛");
+    if (!name && !desc) {
+        alert("Please write something.");
         return;
     }
-
-    // ❗ Bad words warning (no block)
-    if (hasBadWords(desc)) {
-        alert("Please use respectful words 🌱");
-        return;
-    }
-
-    // Loading state
-    outputBox.innerHTML = "⏳ Generating…";
-
-    let tone = "soft";
-    if (depth === "medium") tone = "balanced";
-    if (depth === "deep") tone = "deep";
 
     const settings = JSON.parse(localStorage.getItem("heartnote_settings")) || {};
     const language = settings.language || "en";
+
+    const output = document.getElementById("output");
+    output.innerHTML = "⏳ Generating...";
 
     const url =
         `/api/dashboard/?mode=${encodeURIComponent(mode)}` +
         `&name=${encodeURIComponent(name)}` +
         `&desc=${encodeURIComponent(desc)}` +
-        `&tone=${encodeURIComponent(tone)}` +
+        `&depth=${encodeURIComponent(depth)}` +
         `&language=${encodeURIComponent(language)}`;
 
-    try {
         const res = await fetch(url);
-        if (!res.ok) throw new Error("LLM error");
-
         const data = await res.json();
-        const text = data?.response || "✨ Words are resting right now.";
+const text = data.response.response.trim();
+emotionalTypeWrite(text, "output", depth);
 
-        // Clear ONCE, then typewriter owns output
-        outputBox.textContent = "";
-        emotionalTypeWrite(text, "output", depth);
-
-    } catch (err) {
-        outputBox.textContent =
-            "✨ HeartNote is thinking quietly right now.\nPlease try again in a moment.";
-    }
+    
 }
+
 
 
 
