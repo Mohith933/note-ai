@@ -1336,22 +1336,24 @@
     showRecents();
 }
 
-        let typingActive = false;
-
-function emotionalTypeWrite(text, elementId, depth = "medium") {
+        function emotionalTypeWrite(text, elementId, depth = "medium") {
     const el = document.getElementById(elementId);
 
-    typingActive = true;
-    el.textContent = "";   // ✅ NEVER use innerHTML here
+    // ✅ HARD GUARD (THIS STOPS VANISH)
+    if (typeof text !== "string" || !text.trim()) {
+        el.textContent = "⚠️ No content generated.";
+        return;
+    }
 
+    el.textContent = "";
     let i = 0;
+
     let speed;
     if (depth === "deep") speed = 70;
     else if (depth === "light") speed = 35;
     else speed = 50;
 
     function type() {
-        if (!typingActive) return;   // ✅ stop when view changes
         if (i < text.length) {
             el.textContent += text.charAt(i);
             i++;
@@ -1362,6 +1364,7 @@ function emotionalTypeWrite(text, elementId, depth = "medium") {
 
     type();
 }
+
 
 
         async function generateContent() {
