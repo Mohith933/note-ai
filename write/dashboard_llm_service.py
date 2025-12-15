@@ -59,8 +59,7 @@ Rules:
 - No advice, no judgement, no emojis
 
 Format: 
-Dear Someone dear, 
-{content} 
+Dear Someone dear,  
 With warmth, 
 💗 HeartNote AI
 """
