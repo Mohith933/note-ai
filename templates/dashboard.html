@@ -1360,47 +1360,49 @@
         }
 
         async function generateContent() {
-            const name = document.getElementById("nameInput").value.trim();
-            const desc = document.getElementById("descInput").value.trim();
-            const depth = document.getElementById("depthInput").value;
-            const mode = document.getElementById("toolTitle").textContent.toLowerCase();
+    const name = document.getElementById("nameInput").value.trim();
+    const desc = document.getElementById("descInput").value.trim();
+    const depth = document.getElementById("depthInput").value;
+    const mode = document.getElementById("toolTitle").textContent.toLowerCase();
 
-            const settings = JSON.parse(localStorage.getItem("heartnote_settings")) || {};
-            const language = settings.language || "en";
+    const settings = JSON.parse(localStorage.getItem("heartnote_settings")) || {};
+    const language = settings.language || "en";
 
-            const outputBox = document.getElementById("output");
-            outputBox.innerHTML = "⏳ Generating...";
-
-            let tone = "soft";
-            if (depth === "medium") tone = "balanced";
-            if (depth === "deep") tone = "deep";
-
-            const url = `/api/dashboard/?mode=${encodeURIComponent(mode)}&name=${encodeURIComponent(name)}&desc=${encodeURIComponent(desc)}&tone=${tone}&language=${language}`;
-
-           try {
-    const res = await fetch(url);
-    const data = await res.json();
-
+    const outputBox = document.getElementById("output");
     const state = document.getElementById("state");
 
-   if (data.blocked === true) {
-    state.dataset.blocked = "true";
-
-    const text =
-        typeof data === "string"
-            ? data
-            : data.response || "";
-
-    emotionalTypeWrite(text, "output", depth);
-    return;
-}
-
+    outputBox.innerHTML = "⏳ Generating...";
     state.dataset.blocked = "false";
-    emotionalTypeWrite(data.response, "output", depth);
 
-} catch (err) {
-    outputBox.innerHTML = "⚠️ Error contacting backend.";
+    let tone = "soft";
+    if (depth === "medium") tone = "balanced";
+    if (depth === "deep") tone = "deep";
+
+    const url = `/api/dashboard/?mode=${encodeURIComponent(mode)}&name=${encodeURIComponent(name)}&desc=${encodeURIComponent(desc)}&tone=${tone}&language=${language}`;
+
+    try {
+        const res = await fetch(url);
+        const data = await res.json();
+
+        // Normalize response (handles string or object)
+        const text =
+            typeof data === "string"
+                ? data
+                : data?.response || "";
+
+        // Handle blocked state
+        if (data?.blocked === true) {
+            state.dataset.blocked = "true";
+        }
+
+        // Always render something
+        emotionalTypeWrite(text || "⚠️ No response generated.", "output", depth);
+
+    } catch (err) {
+        outputBox.innerHTML = "⚠️ Error contacting backend.";
+    }
 }
+
 
         }
 
