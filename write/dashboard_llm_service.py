@@ -2,8 +2,9 @@ import os
 from datetime import datetime
 import google.generativeai as genai
 
+
 # -----------------------------------------------------
-# GEMINI CONFIG (used only when available)
+# GEMINI CONFIG (optional)
 # -----------------------------------------------------
 GEMINI_API_KEY = os.environ.get("GEMINI_API_KEY")
 
@@ -14,6 +15,9 @@ MODEL_NAME = "gemini-2.0-flash"
 
 
 def call_gemini(prompt: str) -> str:
+    if not GEMINI_API_KEY:
+        raise RuntimeError("Gemini API key not configured")
+
     model = genai.GenerativeModel(MODEL_NAME)
     response = model.generate_content(prompt)
     return response.text.strip()
@@ -32,7 +36,6 @@ DEPTH_TONE = {
 # -----------------------------------------------------
 # DASHBOARD TEMPLATES
 # -----------------------------------------------------
-
 DASHBOARD_REFLECTION = """
 You are HeartNote Premium Reflection Writer.
 
@@ -61,11 +64,6 @@ Rules:
 - Paragraph 2: 15–25 words
 - Poetic, grounded
 - No advice, no judgement, no emojis
-
-Format: 
-Dear Someone dear, 
-With warmth, 
-💗 HeartNote AI
 """
 
 DASHBOARD_JOURNAL = """
@@ -83,7 +81,6 @@ Rules:
 - No advice, no emojis
 
 Date: {date}
-💗 HeartNote AI
 """
 
 DASHBOARD_POEM = """
@@ -134,11 +131,6 @@ Rules:
 DASHBOARD_NOTE = """
 You are HeartNote Premium Note Writer.
 
-Rules:
-- Use EXACT bullet format
-- Neutral, reflective language
-- No advice, no emojis
-
 Format ONLY:
 
 • What you felt: {desc}
@@ -157,39 +149,13 @@ class Dashboard_LLM_Service:
         tone = DEPTH_TONE.get(depth, DEPTH_TONE["light"])
         mode = (mode or "").lower().strip()
         language = (language or "en").lower().strip()
-        safe, result = self.safety_filter(desc)
+
+        # 1️⃣ Safety filter
+        safe, message = self.safety_filter(desc)
         if not safe:
-            return {
-                "response": result,
-                "blocked": False   # frontend no longer depends on this
-            }
-            template = self.get_template(mode)
-            if not template:
-                return {
-                    "response": "This writing mode is not available right now.",
-                    "blocked": False
-                }
-                prompt = template.format(
-                    name=name,
-                    desc=desc,
-                    tone=tone
-                )
-                try:
-                    text = self.call_llm(prompt, language)
-                    if not text.strip():
-                        raise ValueError("Empty response")
-                except Exception:
-                    text = (
-                        "AI writing is temporarily resting.\n\n
-                        "Please try again shortly."
-                    )
-                    return {
-                        "response": text,
-                        "blocked": False
-                    }
+            return {"response": message, "blocked": False}
 
-
-        # 3️⃣ TEMPLATE SELECTION
+        # 2️⃣ Template selection
         templates = {
             "reflection": DASHBOARD_REFLECTION,
             "letters": DASHBOARD_LETTER,
@@ -203,21 +169,30 @@ class Dashboard_LLM_Service:
 
         template = templates.get(mode)
         if not template:
-            return {"response": "⚠ Unknown writing mode.", "blocked": False}
+            return {"response": "This writing mode is not available.", "blocked": False}
 
+        # 3️⃣ Prompt build
         date = datetime.now().strftime("%d/%m/%Y")
 
         prompt = template.format(
             name=name,
             desc=desc,
             tone=tone,
-            date=date,
+            date=date
         )
 
         prompt = f"[LANG={language}]\n{prompt}"
 
-        # 4️⃣ GEMINI CALL (local / allowed env)
-        text = call_gemini(prompt)
+        # 4️⃣ LLM call with fallback
+        try:
+            text = call_gemini(prompt)
+            if not text:
+                raise ValueError("Empty response")
+        except Exception:
+            text = (
+                "AI writing is temporarily resting.\n\n"
+                "Please try again shortly."
+            )
 
         return {"response": text, "blocked": False}
 
@@ -229,7 +204,7 @@ class Dashboard_LLM_Service:
 
         bad_words = [
             "fuck", "bitch", "shit", "asshole",
-            "bastard", "slut", "dick", "pussy",
+            "bastard", "slut", "dick", "pussy"
         ]
         for w in bad_words:
             if w in t:
@@ -237,7 +212,7 @@ class Dashboard_LLM_Service:
 
         selfharm = [
             "kill myself", "i want to die", "end my life",
-            "self harm", "no reason to live",
+            "self harm", "no reason to live"
         ]
         for s in selfharm:
             if s in t:
