@@ -12,6 +12,7 @@
         rel="stylesheet">
 
     <style>
+    
         body[data-theme="light"] {
             --accent: #ff4d6d;
             --accent-dark: #e63950;
@@ -638,13 +639,15 @@
             opacity: 0.7;
         }
 
-        footer {
+       footer {
             text-align: center;
             margin-top: 50px;
             padding: 20px;
             font-size: .9rem;
             opacity: .7;
         }
+
+
 
         .playground-header {
             display: flex;
@@ -926,11 +929,11 @@
                 <div class="menu-group">
                     <button class="dropdown-btn">🌿 Day-to-Day Life ▾</button>
                     <div class="dropdown-content">
-                        <a href="#" onclick="openTool('Dashboard')">🏠 Dashboard</a>
-                        <a href="#" onclick="openTool('Reflection')">🌿 Reflection</a>
-                        <a href="#" onclick="openTool('Journal')">📖 Journal</a>
-                        <a href="#" onclick="openTool('Affirmation')">🌈 Affirmation</a>
-                        <a href="#" onclick="openTool('Notes')">📝 Notes</a>
+                        <a href="#" id="menu-dashboard" onclick="openTool('Dashboard'); setActiveMenu(this)">🏠 Dashboard</a>
+                        <a href="#" onclick="openTool('Reflection'); setActiveMenu(this)">🌿 Reflection</a>
+                        <a href="#" onclick="openTool('Journal'); setActiveMenu(this)">📖 Journal</a>
+                        <a href="#" onclick="openTool('Affirmation'); setActiveMenu(this)">🌈 Affirmation</a>
+                        <a href="#" onclick="openTool('Notes'); setActiveMenu(this)">📝 Notes</a>
                     </div>
                 </div>
 
@@ -938,10 +941,10 @@
                 <div class="menu-group">
                     <button class="dropdown-btn">💞 Heart & Emotion ▾</button>
                     <div class="dropdown-content">
-                        <a href="#" onclick="openTool('Letters')">💌 Letters</a>
-                        <a href="#" onclick="openTool('Poems')">🪶 Poems</a>
-                        <a href="#" onclick="openTool('Story')">✨ Story</a>
-                        <a href="#" onclick="openTool('Quotes')">💭 Quotes</a>
+                        <a href="#" onclick="openTool('Letters'); setActiveMenu(this)">💌 Letters</a>
+                        <a href="#" onclick="openTool('Poems'); setActiveMenu(this)">🪶 Poems</a>
+                        <a href="#" onclick="openTool('Story'); setActiveMenu(this)">✨ Story</a>
+                        <a href="#" onclick="openTool('Quotes'); setActiveMenu(this)">💭 Quotes</a>
                     </div>
                 </div>
             </nav>
@@ -1063,6 +1066,7 @@
                     <span>Language</span>
                     <select id="uiLanguage" class="select-style">
                         <option value="en">English</option>
+                        
                     </select>
                 </label>
 
@@ -1303,6 +1307,13 @@
 
         // 🔙 Go back and save current state (only if not viewing an old one)
         function goBack() {
+             openTool('Dashboard');
+
+    // Set sidebar active state
+    const dashboardLink = document.getElementById('menu-dashboard');
+    if (dashboardLink) {
+        setActiveMenu(dashboardLink);
+    }
             const state = document.getElementById("state");
 
             const workspace = document.getElementById("workspaceView");
@@ -1611,17 +1622,33 @@ emotionalTypeWrite(text, "output", depth);
             });
         });
         window.addEventListener("DOMContentLoaded", function () {
-            const mode = localStorage.getItem("mode");
-            const heartMenu = document.querySelectorAll(".menu-group")[1]; // second group (Heart & Emotion)
 
-            if (mode === "under18") {
-                // Hide romantic/emotional tools
-                heartMenu.style.display = "none";
-            } else if (mode === "adult") {
-                // Show all tools
-                heartMenu.style.display = "block";
-            }
-        });
+    // 🔹 Existing age logic (keep this)
+    const mode = localStorage.getItem("mode");
+    const heartMenu = document.querySelectorAll(".menu-group")[1];
+
+    if (mode === "under18") {
+        heartMenu.style.display = "none";
+    } else {
+        heartMenu.style.display = "block";
+    }
+
+    // ✅ DEFAULT DASHBOARD ACTIVE
+    openTool('Dashboard');
+
+    const dashboardLink = document.getElementById('menu-dashboard');
+    if (dashboardLink) {
+        setActiveMenu(dashboardLink);
+    }
+});
+
+        function setActiveMenu(el) {
+    document.querySelectorAll('.menu a').forEach(a => {
+        a.classList.remove('active');
+    });
+    el.classList.add('active');
+}
+
         window.addEventListener("DOMContentLoaded", function () {
             const mode = localStorage.getItem("mode");
             const cardsContainer = document.querySelector(".cards");
