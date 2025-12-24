@@ -12,7 +12,7 @@
         href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Caveat:wght@400;600&family=Shadows+Into+Light&family=Dancing+Script:wght@400;600&display=swap"
         rel="stylesheet">
     <link rel="manifest" href="{% static 'pwa/manifest.json' %}">
-    <meta name="theme-color" content="#6366f1">
+    <meta name="theme-color" content="#ff4d6d">
     <style>
         body[data-theme="light"] {
             --accent: #ff4d6d;
@@ -979,14 +979,15 @@
             <h1 id="welcomeText">Welcome!</h1>
 
             <div class="avatar-container">
-                <img class="avatar" onclick="openTool('Accounts')" src="data:image/svg+xml;utf8,
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>
-  <circle cx='32' cy='32' r='30' fill='%23ffe4e6'/>
-  <path d='M32 22c3-6 12-6 15 0 3 6-1 14-15 22-14-8-18-16-15-22 3-6 12-6 15 0z'
-        fill='%23e11d48'/>
-</svg>" />
+                 <img
+    class="avatar"
+    id="dashboardAvatar"
+    onclick="openTool('Accounts')"
+    src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23ffe4e6'/%3E%3Cpath d='M32 22c3-6 12-6 15 0 3-6-1 14-15 22-14-8-18-16-15-22 3-6 12-6 15 0z' fill='%23e11d48'/%3E%3C/svg%3E"
+  />
             </div>
         </div>
+
 
         <!-- Account View -->
         <div id="accountView" class="hidden pageView">
@@ -998,12 +999,13 @@
             <div class="section-box">
                 <h3>Profile</h3>
                 <center>
-                    <img class="profile-avatar" id="profileAvatar" src="data:image/svg+xml;utf8,
-<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'>
-  <circle cx='32' cy='32' r='30' fill='%23ffe4e6'/>
-  <path d='M32 22c3-6 12-6 15 0 3 6-1 14-15 22-14-8-18-16-15-22 3-6 12-6 15 0z'
-        fill='%23e11d48'/>
-</svg>">
+                    <img class="profile-avatar" id="profileAvatar"
+                        src="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='30' fill='%23ffe4e6'/%3E%3Cpath d='M32 22c3-6 12-6 15 0 3 6-1 14-15 22-14-8-18-16-15-22 3-6 12-6 15 0z' fill='%23e11d48'/%3E%3C/svg%3E"
+                        style="cursor:pointer" />
+
+
+                    <input type="file" id="avatarInput" accept="image/*" style="display:none" />
+
                 </center>
 
                 <div class="info-row">
@@ -1100,8 +1102,13 @@
                     Send Feedback
                 </button>
 
+                <button class="danger-btn" onclick="resetApp()">
+  Reset App
+</button>
 
-                <button class="logout-btn" onclick="logoutUser()">Logout</button>
+
+
+                <button class="logout-btn" onclick="deleteAccount()">Delete Account</button>
             </div>
 
             <!-- ABOUT SECTION -->
@@ -1867,7 +1874,7 @@
         // apply theme on startup
         loadTheme();
         // === Logout ===
-        async function logoutUser() {
+        async function deleteAccount() {
 
             // MUST be POST, or Django rejects it
             await fetch("/api/delete-account/", {
@@ -1879,6 +1886,18 @@
 
             window.location.href = "/";
         }
+    async function resetApp() {
+  // Remove only app-level local data
+  localStorage.removeItem("recents");
+  localStorage.removeItem("heartnote_settings");
+
+  // Optional: user feedback
+  alert("App has been reset.");
+
+  // Soft reload to apply clean state
+  window.location.reload();
+}
+
         const styleSelect = document.getElementById("handwritingStyle");
         const outputArea = document.getElementById("output");
         const savedStyle = localStorage.getItem("handwritingStyle");
@@ -2056,6 +2075,43 @@
                 document.body.prepend(banner);
             }
 
+        });
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const profileAvatar = document.getElementById("profileAvatar");
+            const dashboardAvatar = document.getElementById("dashboardAvatar");
+            const input = document.getElementById("avatarInput");
+
+            // Load saved avatar everywhere
+            const saved = localStorage.getItem("profile-avatar");
+            if (saved) {
+                if (profileAvatar) profileAvatar.src = saved;
+                if (dashboardAvatar) dashboardAvatar.src = saved;
+            }
+
+            if (!profileAvatar || !input) return;
+
+            // Click profile avatar → upload
+            profileAvatar.addEventListener("click", () => input.click());
+
+            // On image select
+            input.addEventListener("change", () => {
+                const file = input.files[0];
+                if (!file || !file.type.startsWith("image/")) return;
+
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const data = reader.result;
+
+                    // Save
+                    localStorage.setItem("profile-avatar", data);
+
+                    // Update both
+                    profileAvatar.src = data;
+                    if (dashboardAvatar) dashboardAvatar.src = data;
+                };
+                reader.readAsDataURL(file);
+            });
         });
     </script>
 </body>
