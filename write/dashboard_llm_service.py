@@ -1,6 +1,7 @@
 import os
 from datetime import datetime
 import google.generativeai as genai
+import random
 
 
 # -----------------------------------------------------
@@ -197,21 +198,53 @@ Date: {date}
 
 
 FALLBACK_CONTENT = {
-    "reflection": [
-        "Some emotions arrive quietly, asking only to be noticed.\n\nEven without answers, their presence leaves a soft weight in the chest.",
-        "There are feelings that don’t demand understanding.\n\nThey simply stay, breathing beside the moment."
-    ],
-    "poems": [
-        "The heart pauses\nbetween what was said\nand what stayed silent\nwaiting for meaning\nto settle.",
-        "Some feelings move slowly,\nlike shadows at dusk,\nnever rushing,\nalways honest."
-    ],
-    "journal": [
-        "Date: {date}\n\nToday carried a familiar heaviness.\n\nNothing dramatic happened, yet the feeling lingered, quietly shaping the edges of the day."
-    ]
+
+    "reflection": {
+        "light": [
+            "Some feelings don’t arrive loudly.\n\nThey sit beside the moment, soft and unfinished, asking only to be felt.",
+            "There was no clear beginning to this emotion.\n\nIt appeared gently, leaving a quiet warmth behind."
+        ],
+        "medium": [
+            "This feeling carried weight without explanation.\n\nIt stayed steady, neither heavy nor light, simply present.",
+            "The emotion unfolded slowly.\n\nNothing dramatic—just a calm awareness settling in."
+        ],
+        "deep": [
+            "The feeling moved through memory and silence.\n\nIt lingered, layered and unresolved, shaping the space around it.",
+            "Some emotions leave echoes.\n\nThey remain long after the moment passes, quietly reshaping the inside."
+        ]
+    },
+
+    "journal": {
+        "light": [
+            "Date: {date}\n\nToday felt gentle but uncertain.\n\nNothing demanded answers, yet the feeling stayed, soft and observant.",
+            "Date: {date}\n\nThe day moved calmly.\n\nA quiet emotion followed along, never asking to be named."
+        ],
+        "medium": [
+            "Date: {date}\n\nThere was a steady emotional undercurrent today.\n\nNot overwhelming, but noticeable enough to pause and reflect.",
+            "Date: {date}\n\nThe feeling surfaced without warning.\n\nIt stayed neutral, grounding the rhythm of the day."
+        ],
+        "deep": [
+            "Date: {date}\n\nThe emotion felt layered and familiar.\n\nIt carried memory, silence, and a quiet sense of depth.",
+            "Date: {date}\n\nSome feelings resist clarity.\n\nThis one stayed, heavy with presence, yet calm."
+        ]
+    },
+
+    "poems": {
+        "light": [
+            "A feeling passed softly\nlike evening light\nnever asking to stay\nnever rushing away.",
+            "The heart noticed\nsomething small\nand let it remain\nwithout questions."
+        ],
+        "medium": [
+            "A quiet emotion\nstood still\nbetween thought and breath\nwaiting to be felt.",
+            "Some feelings\nwalk slowly\nleaving space\nbehind them."
+        ],
+        "deep": [
+            "The feeling arrived\nlayered with memory\nmoving through silence\nwithout leaving a name.",
+            "An emotion stayed\nlonger than expected\nshaping the quiet\ninside."
+        ]
+    }
+
 }
-
-
-
 # -----------------------------------------------------
 # LLM SERVICE (GEMINI)
 # -----------------------------------------------------
@@ -287,20 +320,20 @@ class Dashboard_LLM_Service:
             }
 
         except Exception:
-            fallback_list = FALLBACK_CONTENT.get(mode, [])
+            fallback_mode = FALLBACK_CONTENT.get(mode, {})
+            fallback_list = fallback_mode.get(depth, [])
             if fallback_list:
                 text = random.choice(fallback_list).format(date=date)
             else:
                 text = (
-                    "The thoughts are still forming.\n\n"
-                    "Some feelings take time before they find words."
+            "The words feel quiet right now.\n\n"
+            "Some feelings take time before they find language."
                 )
             return {
         "response": text,
         "blocked": False,
         "is_fallback": True
-            }
-
+    }
 
     # -------------------------------------------------
     # TEMPLATE ROUTER
