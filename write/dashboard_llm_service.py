@@ -196,6 +196,19 @@ Date: {date}
 """
 
 
+FALLBACK_CONTENT = {
+    "reflection": [
+        "Some emotions arrive quietly, asking only to be noticed.\n\nEven without answers, their presence leaves a soft weight in the chest.",
+        "There are feelings that don’t demand understanding.\n\nThey simply stay, breathing beside the moment."
+    ],
+    "poems": [
+        "The heart pauses\nbetween what was said\nand what stayed silent\nwaiting for meaning\nto settle.",
+        "Some feelings move slowly,\nlike shadows at dusk,\nnever rushing,\nalways honest."
+    ],
+    "journal": [
+        "Date: {date}\n\nToday carried a familiar heaviness.\n\nNothing dramatic happened, yet the feeling lingered, quietly shaping the edges of the day."
+    ]
+}
 
 
 
@@ -274,14 +287,20 @@ class Dashboard_LLM_Service:
             }
 
         except Exception:
-            return {
-                "response": (
+            fallback_list = FALLBACK_CONTENT.get(mode, [])
+            if fallback_list:
+                text = random.choice(fallback_list).format(date=date)
+            else:
+                text = (
                     "The thoughts are still forming.\n\n"
-                    "Please try again in a moment."
-                ),
-                "blocked": False,
-                "is_fallback": True
+                    "Some feelings take time before they find words."
+                )
+            return {
+        "response": text,
+        "blocked": False,
+        "is_fallback": True
             }
+
 
     # -------------------------------------------------
     # TEMPLATE ROUTER
