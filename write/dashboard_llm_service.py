@@ -244,19 +244,19 @@ FALLBACK_CONTENT = {
         ]
     },
     "letters": {
-        "light": [
-            "Dear {name},\n\nSome feelings arrive quietly.\n\nThis one stayed gentle, asking only to be acknowledged.",
-            "Dear {name},\n\nThere’s no urgency in this emotion.\n\nJust a soft presence, calm and honest."
-        ],
-        "medium": [
-            "Dear {name},\n\nThis feeling carries thoughtfulness.\n\nNot heavy, not light—simply real.",
-            "Dear {name},\n\nThe emotion unfolded slowly.\n\nNothing dramatic, just sincere."
-        ],
-        "deep": [
-            "Dear {name},\n\nSome emotions carry memory.\n\nThis one stayed, layered and quiet.",
-            "Dear {name},\n\nThe feeling lingered longer than expected.\n\nUnresolved, yet calm."
-        ]
-    },
+    "light": [
+        "Dear you,\n\nSome feelings arrive quietly.\n\nThis one stayed gentle, asking only to be acknowledged.",
+        "Dear you,\n\nThere’s no urgency in this emotion.\n\nJust a soft presence, calm and honest."
+    ],
+    "medium": [
+        "Dear you,\n\nThis feeling carries thoughtfulness.\n\nNot heavy, not light—simply real.",
+        "Dear you,\n\nThe emotion unfolded slowly.\n\nNothing dramatic, just sincere."
+    ],
+    "deep": [
+        "Dear you,\n\nSome emotions carry memory.\n\nThis one stayed, layered and quiet.",
+        "Dear you,\n\nThe feeling lingered longer than expected.\n\nUnresolved, yet calm."
+    ]
+},
 
     "story": {
         "light": [
@@ -303,21 +303,20 @@ FALLBACK_CONTENT = {
         ]
     },
 
-    "notes": {
-        "light": [
-            "• What you felt: {desc}\n• Why it happened: a quiet moment of awareness\n• What could help: allowing the feeling to sit",
-            "• What you felt: {desc}\n• Why it happened: an internal pause\n• What could help: gentle reflection"
-        ],
-        "medium": [
-            "• What you felt: {desc}\n• Why it happened: emotional awareness\n• What could help: calm acknowledgment",
-            "• What you felt: {desc}\n• Why it happened: layered thoughts\n• What could help: quiet presence"
-        ],
-        "deep": [
-            "• What you felt: {desc}\n• Why it happened: unresolved emotion\n• What could help: space without pressure",
-            "• What you felt: {desc}\n• Why it happened: emotional depth\n• What could help: stillness"
-        ]
-    }
-
+   "notes": {
+    "light": [
+        "• What you felt: a quiet emotion\n• Why it happened: a moment of awareness\n• What could help: allowing the feeling to sit",
+        "• What you felt: a soft internal shift\n• Why it happened: an emotional pause\n• What could help: gentle reflection"
+    ],
+    "medium": [
+        "• What you felt: emotional awareness\n• Why it happened: layered thoughts\n• What could help: calm acknowledgment",
+        "• What you felt: a steady inner response\n• Why it happened: quiet realization\n• What could help: simple presence"
+    ],
+    "deep": [
+        "• What you felt: unresolved emotion\n• Why it happened: emotional depth\n• What could help: space without pressure",
+        "• What you felt: something unspoken\n• Why it happened: inner complexity\n• What could help: stillness"
+    ]
+}
 }
 # -----------------------------------------------------
 # LLM SERVICE (GEMINI)
