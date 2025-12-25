@@ -194,6 +194,80 @@ FALLBACK_CONTENT = {
         "deep": [
             "The feeling arrived\nlayered with silence."
         ]
+    },
+     "letter": {
+        "soft": [
+            "Dear someone dear,\n\nSome feelings come without urgency.\n\nThey rest quietly, asking only to be felt.",
+            "Dear someone dear,\n\nThis feeling stayed gentle.\n\nIt didn’t need words to exist."
+        ],
+        "balanced": [
+            "Dear someone dear,\n\nA steady emotion settled in.\n\nCalm, honest, and present.",
+            "Dear someone dear,\n\nNothing dramatic unfolded.\n\nJust a feeling that stayed real."
+        ],
+        "deep": [
+            "Dear someone dear,\n\nThis feeling carried memory.\n\nIt lingered, quiet and unresolved.",
+            "Dear someone dear,\n\nSome emotions remain.\n\nThis one stayed longer than expected."
+        ]
+    },
+
+    "story": {
+        "soft": [
+            "The moment passed gently. Nothing changed, yet something was felt.",
+            "It was a quiet moment, but the feeling stayed."
+        ],
+        "balanced": [
+            "The feeling appeared without warning. It shaped the moment calmly.",
+            "Nothing stood out, yet the emotion remained present."
+        ],
+        "deep": [
+            "The feeling moved through silence. It stayed after the moment ended.",
+            "An emotion lingered, unspoken but deeply felt."
+        ]
+    },
+
+    "quote": {
+        "soft": [
+            "Some feelings exist simply to be noticed.",
+            "Not every emotion needs explanation."
+        ],
+        "balanced": [
+            "Certain emotions stay quietly within a moment.",
+            "Feelings don’t always arrive with clarity."
+        ],
+        "deep": [
+            "Some emotions leave echoes long after they arrive.",
+            "Depth often lives in silence."
+        ]
+    },
+
+    "affirmation": {
+        "soft": [
+            "This feeling is allowed to exist.",
+            "It’s okay to notice what is present."
+        ],
+        "balanced": [
+            "This moment is valid as it is.",
+            "The feeling can stay without pressure."
+        ],
+        "deep": [
+            "Even unresolved emotions deserve space.",
+            "Depth does not need answers."
+        ]
+    },
+
+    "notes": {
+        "soft": [
+            "• What you felt: a quiet emotion\n• Why it happened: a gentle moment of awareness\n• What to try: allowing the feeling to sit",
+            "• What you felt: a soft internal shift\n• Why it happened: emotional pause\n• What to try: gentle reflection"
+        ],
+        "balanced": [
+            "• What you felt: emotional steadiness\n• Why it happened: grounded awareness\n• What to try: calm acknowledgment",
+            "• What you felt: neutral emotion\n• Why it happened: quiet realization\n• What to try: simple presence"
+        ],
+        "deep": [
+            "• What you felt: unresolved emotion\n• Why it happened: emotional depth\n• What to try: space without pressure",
+            "• What you felt: something unspoken\n• Why it happened: inner complexity\n• What to try: stillness"
+        ]
     }
 }
 # ------------------------------------------
