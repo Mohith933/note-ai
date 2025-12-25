@@ -1,6 +1,7 @@
 import os
 import requests
 from datetime import datetime
+import random
 
 
 # ------------------------------------------
@@ -150,7 +151,51 @@ Format:
 • What to try: one gentle idea
 """
 
+import random
 
+FALLBACK_CONTENT = {
+    "reflection": {
+        "soft": [
+            "Some feelings arrive quietly.\n\nThey don’t ask to be understood, only noticed.",
+            "The emotion stayed calm and gentle.\n\nNothing needed to change."
+        ],
+        "balanced": [
+            "A steady feeling settled in.\n\nIt carried clarity without pressure.",
+            "The moment held an emotion.\n\nGrounded, calm, and present."
+        ],
+        "deep": [
+            "The feeling lingered longer than expected.\n\nLayered, quiet, and unresolved.",
+            "Some emotions stay without explanation.\n\nThis one remained."
+        ]
+    },
+
+    "journal": {
+        "soft": [
+            "Date: {date}\n\nToday felt gentle.\n\nA quiet emotion followed along.",
+            "Date: {date}\n\nNothing stood out.\n\nStill, a feeling remained."
+        ],
+        "balanced": [
+            "Date: {date}\n\nThere was emotional steadiness today.\n\nCalm and reflective.",
+            "Date: {date}\n\nThe feeling surfaced softly.\n\nIt stayed neutral."
+        ],
+        "deep": [
+            "Date: {date}\n\nThe emotion felt layered.\n\nIt carried memory and depth.",
+            "Date: {date}\n\nSome feelings resist clarity.\n\nThis one stayed."
+        ]
+    },
+
+    "poem": {
+        "soft": [
+            "A quiet feeling\nrested briefly\nthen moved on."
+        ],
+        "balanced": [
+            "An emotion stayed\nbetween thought and breath."
+        ],
+        "deep": [
+            "The feeling arrived\nlayered with silence."
+        ]
+    }
+}
 # ------------------------------------------
 # LLM SERVICE (LOCAL OLLAMA + SAFE FALLBACK)
 # ------------------------------------------
@@ -178,6 +223,20 @@ class LLM_Service:
         except Exception:
             return "⚠️ AI writing is temporarily resting. Please try again shortly."
 
+    def get_fallback(self, mode, tone):
+        mode = mode.lower()
+        tone = tone.lower()
+        mode_data = FALLBACK_CONTENT.get(mode)
+        if not mode_data:
+            return "The words are resting right now.\n\nPlease try again shortly."
+        tone_data = mode_data.get(tone) or mode_data.get("soft")
+        text = random.choice(tone_data)
+        if "{date}" in text:
+            date_str = datetime.now().strftime("%d/%m/%Y")
+            text = text.replace("{date}", date_str)
+        return text
+
+
     # -------------------------
     # Main generator
     # -------------------------
@@ -196,7 +255,7 @@ class LLM_Service:
 
         # 🚫 Render / Cloud fallback
         if os.environ.get("RENDER"):
-            return "AI writing is temporarily resting. Please try again shortly."
+            return self.get_fallback(mode, tone)
 
         return self.call_ollama(prompt)
 
