@@ -226,15 +226,18 @@ class LLM_Service:
     def get_fallback(self, mode, tone):
         mode = mode.lower()
         tone = tone.lower()
-        mode_data = FALLBACK_CONTENT.get(mode)
+        if tone not in ["soft", "balanced", "deep"]:
+            tone = "soft"
+            mode_data = FALLBACK_CONTENT.get(mode)
         if not mode_data:
-            return "The words are resting right now.\n\nPlease try again shortly."
+            return "The words are resting quietly.\n\nPlease try again shortly."
         tone_data = mode_data.get(tone) or mode_data.get("soft")
         text = random.choice(tone_data)
         if "{date}" in text:
             date_str = datetime.now().strftime("%d/%m/%Y")
             text = text.replace("{date}", date_str)
         return text
+
 
 
     # -------------------------
