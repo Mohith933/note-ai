@@ -201,12 +201,12 @@ FALLBACK_CONTENT = {
     # REFLECTION (1 paragraph)
     # -------------------------------------------------
     "reflection": {
-        "soft": [
+        "light": [
             "Some feelings arrive quietly, without explanation, resting gently inside the moment and asking only to be noticed.",
             "The emotion stayed calm and light, not demanding clarity, simply existing alongside the present.",
             "Nothing pushed forward or pulled away; the feeling remained soft, steady, and unspoken."
         ],
-        "balanced": [
+        "medium": [
             "A steady emotion settled in, grounded and present, shaping the moment without pressure or urgency.",
             "The feeling unfolded naturally, calm and centered, offering awareness rather than answers.",
             "There was no intensity, only balance, as the emotion held its place quietly."
@@ -222,12 +222,12 @@ FALLBACK_CONTENT = {
     # JOURNAL (1 paragraph, includes date)
     # -------------------------------------------------
     "journal": {
-        "soft": [
+        "light": [
             "Date: {date} — Today felt gentle and slow, with a quiet emotion staying nearby, never asking for attention.",
             "Date: {date} — The day passed calmly, carrying a soft emotional tone that lingered without explanation.",
             "Date: {date} — Nothing stood out strongly today, yet a mild feeling followed along."
         ],
-        "balanced": [
+        "medium: [
             "Date: {date} — A steady emotional rhythm shaped the day, calm and grounded, offering space to notice.",
             "Date: {date} — The feeling appeared briefly and stayed present, neutral and reflective.",
             "Date: {date} — Today held emotional balance, neither heavy nor light, just real."
@@ -243,11 +243,11 @@ FALLBACK_CONTENT = {
     # POEM (3–4 lines max)
     # -------------------------------------------------
     "poem": {
-        "soft": [
+        "light": [
             "A quiet feeling\nrested briefly\nthen moved on.",
             "The heart noticed\nsomething small\nand let it stay."
         ],
-        "balanced": [
+        "medium": [
             "An emotion stayed\nbetween breath and thought\nlong enough to feel.",
             "The moment held\nsomething unnamed\nand steady."
         ],
@@ -261,11 +261,11 @@ FALLBACK_CONTENT = {
     # LETTER (1 paragraph, starts with Dear you,)
     # -------------------------------------------------
     "letter": {
-        "soft": [
+        "light": [
             "Dear you, this feeling arrived gently and stayed quietly, not asking for change, only space to exist.",
             "Dear you, there was no urgency in this emotion, just a soft presence resting calmly."
         ],
-        "balanced": [
+        "medium": [
             "Dear you, the emotion unfolded slowly, grounded and sincere, holding the moment steady.",
             "Dear you, this feeling stayed present, calm and real, without needing explanation."
         ],
@@ -279,11 +279,11 @@ FALLBACK_CONTENT = {
     # STORY (2 sentences max)
     # -------------------------------------------------
     "story": {
-        "soft": [
+        "light": [
             "The moment passed gently. A feeling remained quietly behind.",
             "Nothing changed outwardly. Still, something was felt."
         ],
-        "balanced": [
+        "medium": [
             "The emotion surfaced without words. It shaped the moment subtly.",
             "Nothing dramatic occurred, yet the feeling stayed present."
         ],
@@ -297,11 +297,11 @@ FALLBACK_CONTENT = {
     # QUOTE (1 sentence)
     # -------------------------------------------------
     "quote": {
-        "soft": [
+        "light": [
             "Some feelings exist without needing explanation.",
             "Quiet emotions still matter."
         ],
-        "balanced": [
+        "medium": [
             "Certain emotions shape the moment silently.",
             "Not every feeling asks for clarity."
         ],
@@ -315,11 +315,11 @@ FALLBACK_CONTENT = {
     # AFFIRMATION (1–2 lines)
     # -------------------------------------------------
     "affirmation": {
-        "soft": [
+        "light": [
             "This feeling is allowed to exist.",
             "It is okay to notice what is present."
         ],
-        "balanced": [
+        "medium": [
             "This moment does not need clarity to be valid.",
             "The feeling can stay without explanation."
         ],
@@ -333,11 +333,11 @@ FALLBACK_CONTENT = {
     # NOTES (STRICT BULLET FORMAT)
     # -------------------------------------------------
     "note": {
-        "soft": [
+        "light": [
             "• What you felt: a quiet emotional shift\n• Why it happened: internal awareness\n• What could help: gentle space",
             "• What you felt: mild emotional presence\n• Why it happened: emotional pause\n• What could help: calm reflection"
         ],
-        "balanced": [
+        "medium": [
             "• What you felt: steady emotional awareness\n• Why it happened: layered thoughts\n• What could help: grounding presence",
             "• What you felt: neutral emotional response\n• Why it happened: quiet realization\n• What could help: simple acknowledgment"
         ],
