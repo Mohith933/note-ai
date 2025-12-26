@@ -227,7 +227,7 @@ FALLBACK_CONTENT = {
             "Date: {date} — The day passed calmly, carrying a soft emotional tone that lingered without explanation.",
             "Date: {date} — Nothing stood out strongly today, yet a mild feeling followed along."
         ],
-        "medium: [
+        "medium": [
             "Date: {date} — A steady emotional rhythm shaped the day, calm and grounded, offering space to notice.",
             "Date: {date} — The feeling appeared briefly and stayed present, neutral and reflective.",
             "Date: {date} — Today held emotional balance, neither heavy nor light, just real."
