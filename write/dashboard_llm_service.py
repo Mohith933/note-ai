@@ -262,16 +262,16 @@ FALLBACK_CONTENT = {
     # -------------------------------------------------
     "letters": {
         "light": [
-            "Dear {name}, this feeling arrived gently and stayed quietly, not asking for change, only space to exist.",
-            "Dear {name}, there was no urgency in this emotion, just a soft presence resting calmly."
+            "Dear {name}\n\n this feeling arrived gently and stayed quietly,not asking for change, only space to exist.",
+            "Dear {name}\n\n there was no urgency in this emotion, just a soft presence resting calmly."
         ],
         "medium": [
-            "Dear {name}, the emotion unfolded slowly, grounded and sincere, holding the moment steady.",
-            "Dear {name}, this feeling stayed present, calm and real, without needing explanation."
+            "Dear {name}\n\n the emotion unfolded slowly, grounded and sincere, holding the moment steady.",
+            "Dear {name}\n\n this feeling stayed present, calm and real, without needing explanation."
         ],
         "deep": [
-            "Dear {name}, some emotions carry memory, and this one stayed quietly, layered and unresolved.",
-            "Dear {name}, the feeling lingered longer than expected, deep yet calm."
+            "Dear {name}\n\n some emotions carry memory, and this one stayed quietly, layered and unresolved.",
+            "Dear {name}\n\n the feeling lingered longer than expected, deep yet calm."
         ]
     },
 
