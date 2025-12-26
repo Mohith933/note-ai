@@ -6,6 +6,8 @@
     "display": "standalone",
     "background_color": "#0f172a",
     "theme_color": "#6366f1",
+    "lang": "en",
+    "dir": "ltr",
     "orientation": "portrait",
     "description": "HeartNote AI is a calm emotional space for journaling, reflections, letters, and mindful writing.",
     "categories": ["health", "lifestyle", "productivity"],
@@ -28,6 +30,5 @@
     "type": "image/png"
   }
 ]
-
 
 }
