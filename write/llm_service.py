@@ -154,122 +154,152 @@ Format:
 
 
 FALLBACK_CONTENT = {
+
     "reflection": {
         "soft": [
-            "Some feelings arrive quietly.\n\nThey don’t ask to be understood, only noticed.",
-            "The emotion stayed calm and gentle.\n\nNothing needed to change."
+            "Some feelings arrive quietly.They don’t ask to be understood, only noticed.",
+            "The emotion stayed calm and gentle.Nothing needed to change.",
+            "A feeling appeared softly.It remained without asking for attention."
         ],
         "balanced": [
-            "A steady feeling settled in.\n\nIt carried clarity without pressure.",
-            "The moment held an emotion.\n\nGrounded, calm, and present."
+            "A steady feeling settled in.\nIt carried clarity without pressure.",
+            "The moment held an emotion.\nGrounded, calm, and present.",
+            "The feeling stayed balanced.\nNeither heavy nor light."
         ],
         "deep": [
-            "The feeling lingered longer than expected.\n\nLayered, quiet, and unresolved.",
-            "Some emotions stay without explanation.\n\nThis one remained."
+            "The feeling lingered longer than expected.\nLayered, quiet, and unresolved.",
+            "Some emotions stay without explanation.\nThis one remained.",
+            "The emotion carried depth.\nIt stayed beyond the moment."
         ]
     },
 
     "journal": {
         "soft": [
-            "Date: {date}\n\nToday felt gentle.\n\nA quiet emotion followed along.",
-            "Date: {date}\n\nNothing stood out.\n\nStill, a feeling remained."
+            "Date: {date}\nToday felt gentle.\nA quiet emotion followed along.",
+            "Date: {date}\nNothing stood out.\nStill, a feeling remained.",
+            "Date: {date}\nThe day passed softly.\nA calm emotion stayed nearby."
         ],
         "balanced": [
-            "Date: {date}\n\nThere was emotional steadiness today.\n\nCalm and reflective.",
-            "Date: {date}\n\nThe feeling surfaced softly.\n\nIt stayed neutral."
+            "Date: {date}\nThere was emotional steadiness today.\nCalm and reflective.",
+            "Date: {date}\nThe feeling surfaced softly.\nIt stayed neutral.",
+            "Date: {date}\nThe day held balance.\nEmotion stayed present."
         ],
         "deep": [
-            "Date: {date}\n\nThe emotion felt layered.\n\nIt carried memory and depth.",
-            "Date: {date}\n\nSome feelings resist clarity.\n\nThis one stayed."
+            "Date: {date}\nThe emotion felt layered.\nIt carried memory and depth.",
+            "Date: {date}\nSome feelings resist clarity.\nThis one stayed.",
+            "Date: {date}\nThe emotion lingered.\nUnresolved, yet steady."
         ]
     },
 
     "poem": {
         "soft": [
-            "A quiet feeling\nrested briefly\nin silence\nthen moved on."
+            "A quiet feeling\nrested briefly\nthen moved on.",
+            "Soft emotion\npassed through\nwithout noise.",
+            "A small feeling\npaused\nand faded."
         ],
         "balanced": [
-            "An emotion stayed\nbetween thought and breath."
+            "An emotion stayed\nbetween thought\nand breath.",
+            "The feeling stood\ncalmly\nin the moment.",
+            "Emotion lingered\nwithout weight."
         ],
         "deep": [
-            "The feeling arrived\nlayered with silence."
+            "The feeling arrived\nlayered\nwith silence.",
+            "An emotion stayed\nlonger than expected.",
+            "Depth settled\nwithout words."
         ]
     },
-     "letter": {
+
+    "letter": {
         "soft": [
-            "Dear someone dear,\n\nSome feelings come without urgency.\n\nThey rest quietly, asking only to be felt.",
-            "Dear someone dear,\n\nThis feeling stayed gentle.\n\nIt didn’t need words to exist."
+            "Dear you,\nSome feelings come without urgency.They rest quietly, asking only to be felt.",
+            "Dear you,\nThis feeling stayed gentle.It didn’t need words to exist.",
+            "Dear you,\nThe emotion arrived softly.Nothing demanded change."
         ],
         "balanced": [
-            "Dear someone dear,\n\nA steady emotion settled in.\n\nCalm, honest, and present.",
-            "Dear someone dear,\n\nNothing dramatic unfolded.\n\nJust a feeling that stayed real."
+            "Dear you,\nA steady emotion settled in.Calm, honest, and present.",
+            "Dear you,\nNothing dramatic unfolded.Just a feeling that stayed real.",
+            "Dear you,\nThe emotion remained balanced.Quiet and sincere."
         ],
         "deep": [
-            "Dear someone dear,\n\nThis feeling carried memory.\n\nIt lingered, quiet and unresolved.",
-            "Dear someone dear,\n\nSome emotions remain.\n\nThis one stayed longer than expected."
+            "Dear you,\nThis feeling carried memory.It lingered, quiet and unresolved.",
+            "Dear you,\nSome emotions remain.his one stayed longer than expected.",
+            "Dear you,\nThe emotion moved deeply.Without explanation."
         ]
     },
 
     "story": {
         "soft": [
-            "The moment passed gently. Nothing changed, yet something was felt.",
-            "It was a quiet moment, but the feeling stayed."
+            "The moment passed gently. Something was felt.",
+            "It was quiet, yet the feeling stayed.",
+            "Nothing changed, but the emotion remained."
         ],
         "balanced": [
-            "The feeling appeared without warning. It shaped the moment calmly.",
-            "Nothing stood out, yet the emotion remained present."
+            "The feeling appeared calmly. It shaped the moment.",
+            "Nothing stood out, yet emotion stayed present.",
+            "The moment carried feeling without words."
         ],
         "deep": [
-            "The feeling moved through silence. It stayed after the moment ended.",
-            "An emotion lingered, unspoken but deeply felt."
+            "The feeling moved through silence. It stayed.",
+            "An emotion lingered after everything passed.",
+            "The moment ended. The feeling did not."
         ]
     },
 
     "quote": {
         "soft": [
             "Some feelings exist simply to be noticed.",
-            "Not every emotion needs explanation."
+            "Quiet emotions still matter.",
+            "Not every feeling needs words."
         ],
         "balanced": [
             "Certain emotions stay quietly within a moment.",
-            "Feelings don’t always arrive with clarity."
+            "Feelings don’t always arrive with clarity.",
+            "Emotion can be calm and real."
         ],
         "deep": [
             "Some emotions leave echoes long after they arrive.",
-            "Depth often lives in silence."
+            "Depth often lives in silence.",
+            "Unresolved feelings still carry meaning."
         ]
     },
 
     "affirmation": {
         "soft": [
             "This feeling is allowed to exist.",
-            "It’s okay to notice what is present."
+            "It’s okay to notice what is present.",
+            "Nothing needs to change right now."
         ],
         "balanced": [
             "This moment is valid as it is.",
-            "The feeling can stay without pressure."
+            "The feeling can stay without pressure.",
+            "Presence is enough."
         ],
         "deep": [
             "Even unresolved emotions deserve space.",
-            "Depth does not need answers."
+            "Depth does not need answers.",
+            "What is felt does not need fixing."
         ]
     },
 
     "notes": {
         "soft": [
             "• What you felt: a quiet emotion\n• Why it happened: a gentle moment of awareness\n• What to try: allowing the feeling to sit",
-            "• What you felt: a soft internal shift\n• Why it happened: emotional pause\n• What to try: gentle reflection"
+            "• What you felt: a soft internal shift\n• Why it happened: emotional pause\n• What to try: gentle reflection",
+            "• What you felt: calm awareness\n• Why it happened: a quiet moment\n• What to try: patience"
         ],
         "balanced": [
             "• What you felt: emotional steadiness\n• Why it happened: grounded awareness\n• What to try: calm acknowledgment",
-            "• What you felt: neutral emotion\n• Why it happened: quiet realization\n• What to try: simple presence"
+            "• What you felt: neutral emotion\n• Why it happened: quiet realization\n• What to try: simple presence",
+            "• What you felt: balance\n• Why it happened: emotional clarity\n• What to try: stillness"
         ],
         "deep": [
             "• What you felt: unresolved emotion\n• Why it happened: emotional depth\n• What to try: space without pressure",
-            "• What you felt: something unspoken\n• Why it happened: inner complexity\n• What to try: stillness"
+            "• What you felt: something unspoken\n• Why it happened: inner complexity\n• What to try: stillness",
+            "• What you felt: emotional weight\n• Why it happened: memory and silence\n• What to try: quiet space"
         ]
     }
 }
+
 # ------------------------------------------
 # LLM SERVICE (LOCAL OLLAMA + SAFE FALLBACK)
 # ------------------------------------------
