@@ -563,11 +563,11 @@ class Dashboard_LLM_Service:
             }
 
         except Exception:
+            safe_desc = get_suggested_desc(mode, depth, desc)
             fallback_mode = FALLBACK_CONTENT.get(mode, {})
             fallback_list = fallback_mode.get(depth, [])
-            suggested_desc = get_suggested_desc(mode, depth, safe_desc)
             if fallback_list:
-                text = random.choice(fallback_list).format(date=date,name=name,desc=sugesstion_desc)
+                text = random.choice(fallback_list).format(date=date,name=name,desc=safe_desc)
             else:
                 text = (
             "The words feel quiet right now.\n\n"
