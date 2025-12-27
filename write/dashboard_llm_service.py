@@ -245,7 +245,7 @@ FALLBACK_CONTENT = {
     # -------------------------------
     # POEM (3–4 lines)
     # -------------------------------
-    "poem": {
+    "poems": {
         "light": [
             "A quiet feeling\nrested briefly\nthen moved on."
         ],
@@ -260,7 +260,7 @@ FALLBACK_CONTENT = {
     # -------------------------------
     # LETTER (USES {name} + SIGNATURE)
     # -------------------------------
-    "letter": {
+    "letters": {
         "light": [
             "Dear {name},\n\nA gentle feeling stayed quietly, without urgency or demand, simply resting in the moment.\n\nWarmth By,\n💗 HeartNote AI"
         ],
@@ -290,7 +290,7 @@ FALLBACK_CONTENT = {
     # -------------------------------
     # QUOTE (1 sentence)
     # -------------------------------
-    "quote": {
+    "quotes": {
         "light": [
             "Some feelings exist without needing explanation."
         ],
@@ -320,7 +320,7 @@ FALLBACK_CONTENT = {
     # -------------------------------
     # NOTES (STRICT BULLET FORMAT)
     # -------------------------------
-    "note": {
+    "notes": {
         "light": [
             "• What you felt: a quiet emotional presence\n• Why it happened: inner awareness\n• What could help: gentle space"
         ],
