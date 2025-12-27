@@ -481,7 +481,11 @@ FALLBACK_CONTENT = {
     }
 }
 
-
+def get_suggested_desc(mode, depth, original_desc):
+        suggestions = SUGGESTION_CONTENT.get(mode, {}).get(depth, [])
+        if suggestions:
+            return random.choice(suggestions)
+    return original_desc
 
 # -----------------------------------------------------
 # LLM SERVICE (GEMINI)
@@ -490,12 +494,6 @@ class Dashboard_LLM_Service:
 
     def __init__(self, model=GEMINI_MODEL):
         self.model = genai.GenerativeModel(model)
-
-    def get_suggested_desc(mode, depth, original_desc):
-        suggestions = SUGGESTION_CONTENT.get(mode, {}).get(depth, [])
-        if suggestions:
-            return random.choice(suggestions)
-    return original_desc
 
 
     # -------------------------------------------------
