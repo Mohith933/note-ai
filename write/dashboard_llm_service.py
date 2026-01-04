@@ -539,6 +539,7 @@ FALLBACK_CONTENT = {
         "• What you felt: layered emotion shaped by {desc}\n• Why it happened: awareness\n• What remained: space"
     ]
 }
+}
 
 
 def get_suggested_desc(mode, depth, original_desc):
