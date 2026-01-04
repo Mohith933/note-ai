@@ -517,28 +517,27 @@ FALLBACK_CONTENT = {
     },
 
     # --------------------------------
-    # NOTES (STRICT BULLETS)
-    # --------------------------------
-    "notes": {
-        "light": [
-            "• What you felt: gentle emotional calm around {desc}\n• Why it happened: quiet awareness\n•• What remained: space",
-            "• What you felt: light emotional ease within {desc}\n• Why it happened: natural pacing\n• What remained: rest",
-            "• What you felt: calm presence shaped by {desc}\n• Why it happened: emotional softness\n• What remained: patience",
-            "• What you felt: steady calm tied to {desc}\n• Why it happened: acceptance\n• What could help: breathing space"
-        ],
-        "medium": [
-            "• What you felt: balanced emotional awareness in {desc}\n• Why it happened: grounding\n• What remained: reflection",
-            "• What you felt: steady emotions shaped by {desc}\n• Why it happened: inner balance\n• What remained: staying present",
-            "• What you felt: calm emotional rhythm in {desc}\n• Why it happened: clarity\n• What remained: focus",
-            "• What you felt: emotional steadiness within {desc}\n• Why it happened: stability\n• What remained: routine"
-        ],
-        "deep": [
-            "• What you felt: unresolved depth tied to {desc}\n• Why it happened: inner complexity\n• What remained: stillness",
-            "• What you felt: silent emotional weight within {desc}\n• Why it happened: reflection\n• What remained: time",
-            "• What you felt: deep emotional presence in {desc}\n• Why it happened: memory\n• What remained: patience",
-            "• What you felt: layered emotion shaped by {desc}\n• Why it happened: awareness\n• What remained: space"
-        ]
-    }
+# NOTES (STRICT BULLETS) — H1 FINAL
+# --------------------------------
+"notes": {
+    "light": [
+        "• What you felt: gentle emotional calm around {desc}\n• Why it happened: quiet awareness\n• What remained: space",
+        "• What you felt: light emotional ease within {desc}\n• Why it happened: natural pacing\n• What remained: stillness",
+        "• What you felt: calm presence shaped by {desc}\n• Why it happened: emotional softness\n• What remained: quiet",
+        "• What you felt: steady calm tied to {desc}\n• Why it happened: acceptance\n• What remained: openness"
+    ],
+    "medium": [
+        "• What you felt: balanced emotional awareness in {desc}\n• Why it happened: grounding\n• What remained: steadiness",
+        "• What you felt: steady emotions shaped by {desc}\n• Why it happened: inner balance\n• What remained: clarity",
+        "• What you felt: calm emotional rhythm in {desc}\n• Why it happened: awareness\n• What remained: focus-free stillness",
+        "• What you felt: emotional steadiness within {desc}\n• Why it happened: stability\n• What remained: consistency"
+    ],
+    "deep": [
+        "• What you felt: unresolved depth tied to {desc}\n• Why it happened: inner complexity\n• What remained: stillness",
+        "• What you felt: silent emotional weight within {desc}\n• Why it happened: reflection\n• What remained: time passing",
+        "• What you felt: deep emotional presence in {desc}\n• Why it happened: memory\n• What remained: quiet depth",
+        "• What you felt: layered emotion shaped by {desc}\n• Why it happened: awareness\n• What remained: space"
+    ]
 }
 
 
