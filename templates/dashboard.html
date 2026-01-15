@@ -1467,9 +1467,8 @@
             library.style.display = "block";
             showRecents();
         }
-        let isWriting = false;
-let typingInterval = null;
-
+        let typingInterval = null;
+let isWriting = true;
 
 function emotionalTypeWrite(text, elementId, depth, onComplete) {
     const el = document.getElementById(elementId);
@@ -1477,33 +1476,54 @@ function emotionalTypeWrite(text, elementId, depth, onComplete) {
 
     let i = 0;
 
-    let speed = 28; // default medium
-    if (depth === "light") speed = 20;
-    if (depth === "deep") speed = 42;
+    // Base speed by emotional depth
+    let baseSpeed = 28;
+    if (depth === "light") baseSpeed = 20;
+    if (depth === "deep") baseSpeed = 42;
 
-    // 🔴 clear previous typing
+    // Clear previous typing
     if (typingInterval) {
         clearInterval(typingInterval);
         typingInterval = null;
     }
 
-    typingInterval = setInterval(() => {
-        if (!isWriting) {
-            clearInterval(typingInterval);
-            typingInterval = null;
-            return;
+    isWriting = true;
+
+    function getHumanDelay(char) {
+        let delay = baseSpeed + Math.random() * 12; // natural randomness
+
+        // Emotional pauses
+        if (char === "," ) delay += 120;
+        if (char === "." ) delay += 220;
+        if (char === "\n") delay += 400;
+
+        // Deep emotion slows reflection
+        if (depth === "deep" && Math.random() < 0.15) {
+            delay += 180;
         }
+
+        return delay;
+    }
+
+    function typeNextChar() {
+        if (!isWriting) return;
 
         el.innerHTML += text.charAt(i);
         i++;
 
         if (i >= text.length) {
-            clearInterval(typingInterval);
-            typingInterval = null;
             isWriting = false;
             if (onComplete) onComplete();
+            return;
         }
-    }, speed);
+
+        typingInterval = setTimeout(
+            typeNextChar,
+            getHumanDelay(text.charAt(i - 1))
+        );
+    }
+
+    typeNextChar();
 }
 
 
