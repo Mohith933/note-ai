@@ -1429,6 +1429,11 @@
 
         // 🔙 Go back and save current state (only if not viewing an old one)
         function goBack() {
+if (typingInterval) {
+    clearInterval(typingInterval);
+    typingInterval = null;
+    isWriting = false;
+}
             openTool('Dashboard');
 
             // Set sidebar active state
@@ -1466,39 +1471,28 @@
             showRecents();
         }
 let typingInterval = null;
-let isWriting = true;
+let isWriting = false;
 function emotionalTypeWrite(text, elementId, depth, onComplete) {
     const el = document.getElementById(elementId);
     el.innerHTML = "";
 
     let i = 0;
-
-    let speed = 55; // default = medium
+    let speed = 55;
     if (depth === "light") speed = 35;
     if (depth === "deep") speed = 80;
 
-    // 🔴 CLEAR old typing if exists
     if (typingInterval) {
         clearInterval(typingInterval);
         typingInterval = null;
     }
 
-    isWriting = true;
-
     typingInterval = setInterval(() => {
-        if (!isWriting) {
-            clearInterval(typingInterval);
-            typingInterval = null;
-            return;
-        }
-
         el.innerHTML += text.charAt(i);
         i++;
 
         if (i >= text.length) {
             clearInterval(typingInterval);
             typingInterval = null;
-            isWriting = false;
             if (onComplete) onComplete();
         }
     }, speed);
