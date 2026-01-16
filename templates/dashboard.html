@@ -1465,51 +1465,44 @@
             library.style.display = "block";
             showRecents();
         }
-
-function getTypingTone(depth) {
-    if (depth === "deep") return "deep";
-    if (depth === "light") return "light";
-    return "medium";
-}
-        let typingInterval = null;
+let typingInterval = null;
 let isWriting = true;
+function emotionalTypeWrite(text, elementId, depth, onComplete) {
+    const el = document.getElementById(elementId);
+    el.innerHTML = "";
 
-function emotionalTypeWrite(text, elementId, depth, onComplete) { 
-    const el = document.getElementById(elementId);  
-    el.innerHTML = "";  
-  
-    let i = 0;  
-  
-    let speed = 55; // default medium  
-    if (depth === "light") speed = 35;  
-    if (depth === "deep") speed = 80;  
-  
-    // 🔴 clear previous typing  
-    if (typingInterval) {  
-        clearInterval(typingInterval);  
-        typingInterval = null;  
-    }  
-  
-    typingInterval = setInterval(() => {  
-        if (!isWriting) {  
-            clearInterval(typingInterval);  
-            typingInterval = null;  
-            return;  
-        }  
-  
-        el.innerHTML += text.charAt(i);  
-        i++;  
-  
-        if (i >= text.length) {  
-            clearInterval(typingInterval);  
-            typingInterval = null;  
-            isWriting = false;  
-            if (onComplete) onComplete();  
-        }  
-    }, speed);  
-}  
+    let i = 0;
 
+    let speed = 55; // default = medium
+    if (depth === "light") speed = 35;
+    if (depth === "deep") speed = 80;
 
+    // 🔴 CLEAR old typing if exists
+    if (typingInterval) {
+        clearInterval(typingInterval);
+        typingInterval = null;
+    }
+
+    isWriting = true;
+
+    typingInterval = setInterval(() => {
+        if (!isWriting) {
+            clearInterval(typingInterval);
+            typingInterval = null;
+            return;
+        }
+
+        el.innerHTML += text.charAt(i);
+        i++;
+
+        if (i >= text.length) {
+            clearInterval(typingInterval);
+            typingInterval = null;
+            isWriting = false;
+            if (onComplete) onComplete();
+        }
+    }, speed);
+}
 
 
         async function generateContent() {
