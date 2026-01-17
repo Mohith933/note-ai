@@ -1338,23 +1338,23 @@
 
         // 🕒 Save to recents
         function saveRecent(toolName) {
-            let recents = JSON.parse(localStorage.getItem("recents")) || [];
+    let recents = JSON.parse(localStorage.getItem("recents")) || [];
 
-            const data = {
-                id: Date.now(),
-                name: toolName,
-                icon: getToolIcon(toolName),
-                time: new Date().toLocaleString(),
-                nameInput: document.getElementById("nameInput").value,
-                descInput: document.getElementById("descInput").value,
-                depthInput: document.getElementById("depthInput").value,
-                output: document.getElementById("output").innerText
-            };
+    const data = {
+        id: Date.now(),
+        name: toolName,
+        icon: getToolIcon(toolName),
+        time: new Date().toLocaleString(),
+        nameInput: document.getElementById("nameInput").value,
+        descInput: document.getElementById("descInput").value,
+        depthInput: document.getElementById("depthInput").value,
+        output: lastGeneratedText   // ✅ FULL SAFE TEXT
+    };
 
-            recents.unshift(data);
-            recents = recents.slice(0, 20);
-            localStorage.setItem("recents", JSON.stringify(recents));
-        }
+    recents.unshift(data);
+    recents = recents.slice(0, 20);
+    localStorage.setItem("recents", JSON.stringify(recents));
+}
 
         function getToolIcon(name) {
             const icons = {
@@ -1429,49 +1429,36 @@
 
         // 🔙 Go back and save current state (only if not viewing an old one)
         function goBack() {
-if (typingInterval) {
-    clearInterval(typingInterval);
-    typingInterval = null;
+    const state = document.getElementById("state");
+    const isViewingRecent = state.dataset.viewing === "true";
+
+    const hasValidContent =
+        hasGeneratedContent &&
+        lastGeneratedText &&
+        !isViewingRecent;
+
+    if (hasValidContent) {
+        const currentTool = document.getElementById("toolTitle").innerText.trim();
+        saveRecent(currentTool);
+        hasGeneratedContent = false;
+        lastGeneratedText = "";
+    }
+
+    // NOW stop typing
+    if (typingInterval) {
+        clearInterval(typingInterval);
+        typingInterval = null;
+    }
     isWriting = false;
+
+    state.dataset.blocked = "false";
+    state.dataset.viewing = "false";
+
+    openTool("Dashboard");
+    document.getElementById("workspaceView").classList.remove("active");
+    document.getElementById("libraryView").style.display = "block";
+    showRecents();
 }
-            openTool('Dashboard');
-
-            // Set sidebar active state
-            const dashboardLink = document.getElementById('menu-dashboard');
-            if (dashboardLink) {
-                setActiveMenu(dashboardLink);
-            }
-            const state = document.getElementById("state");
-
-            const workspace = document.getElementById("workspaceView");
-            const library = document.getElementById("libraryView");
-            const output = lastGeneratedText.trim();
-
-            const isBlocked = state.dataset.blocked === "true";
-            const isViewingRecent = state.dataset.viewing === "true";
-
-            const hasValidContent =
-    hasGeneratedContent &&
-    lastGeneratedText &&
-    !isViewingRecent;
-
-            // ✅ Save ONLY clean generated content
-            if (!isViewingRecent && hasValidContent) {
-                const currentTool = document.getElementById("toolTitle").innerText.trim();
-                saveRecent(currentTool);
-hasGeneratedContent = false;
-lastGeneratedText = "";
-            }
-
-            // reset flags
-            state.dataset.blocked = "false";
-            state.dataset.viewing = "false";
-
-            // switch view
-            workspace.classList.remove("active");
-            library.style.display = "block";
-            showRecents();
-        }
 let typingInterval = null;
 let isWriting = false;
 let lastGeneratedText = "";
