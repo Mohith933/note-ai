@@ -1429,6 +1429,13 @@
 
         // 🔙 Go back and save current state (only if not viewing an old one)
         function goBack() {
+         openTool('Dashboard');
+
+            // Set sidebar active state
+            const dashboardLink = document.getElementById('menu-dashboard');
+            if (dashboardLink) {
+                setActiveMenu(dashboardLink);
+            }
     const state = document.getElementById("state");
     const isViewingRecent = state.dataset.viewing === "true";
 
