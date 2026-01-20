@@ -11,8 +11,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">  
   <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&display=swap" rel="stylesheet">  
   <link rel="manifest" href="{% static 'pwa/manifest.json' %}">
-<meta name="theme-color" <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#141414">
-<meta name="theme-color" media="(prefers-color-scheme: light)" content="#ffffff">
+<meta name="theme-color" content="#ffffff" id="themeColorMeta">
   <style>  
   :root{  
       --bg: #fff;  
@@ -285,7 +284,7 @@ body.dark {
       </div>    
     </div>    
 
-    <div class="actions">   
+    <div class="actions">    
       <button class="btn" onclick="goHome()">←</button>
       <button class="btn" id="themeToggle" title="Toggle Dark/Light">🌙</button>  
     </div>    
@@ -378,6 +377,8 @@ body.dark {
       const historyList = document.getElementById("historyList");  
       const clearHistoryBtn = document.getElementById("clearHistory");  
       const lenInfo = document.getElementById("lenInfo");  
+      const DAILY_LIMIT = 10;
+      const USAGE_KEY = "heartnote_daily_usage";
  
   
       // local storage key  
@@ -516,6 +517,7 @@ generateBtn.addEventListener("click", async () => {
   const tone = getToneFromEmotion(emotion);
 
   outputBox.innerHTML = "⏳ Generating...";
+
 
   try {
     // Correct final URL
@@ -672,20 +674,36 @@ document.addEventListener('DOMContentLoaded', function() {
   
     })();
     // Theme toggle
+  const THEME_COLORS = {
+  light: "#ffffff",
+  dark: "#0e0e0f"
+};
+function updateThemeColor(theme) {
+  const meta = document.getElementById("themeColorMeta");
+  if (!meta) return;
+
+  meta.setAttribute("content", THEME_COLORS[theme] || "#ffffff");
+}
 const themeToggle = document.getElementById("themeToggle");
 const userTheme = localStorage.getItem("valantine_theme");
+
 if (userTheme === "dark") document.body.classList.add("dark");
 
 function updateThemeIcon() {
   themeToggle.textContent = document.body.classList.contains("dark") ? "☀️" : "🌙";
 }
+updateThemeColor(userTheme);
 updateThemeIcon();
 
 themeToggle.addEventListener("click", () => {
   document.body.classList.toggle("dark");
+
   const isDark = document.body.classList.contains("dark");
-  localStorage.setItem("valantine_theme", isDark ? "dark" : "light");
+  const theme = isDark ? "dark" : "light";
+
+  localStorage.setItem("valantine_theme", theme);
   updateThemeIcon();
+  updateThemeColor(theme);
 });
 // All suggestion sets grouped by mode (SAFE H1 VERSION)
 const suggestionSets = {
@@ -765,6 +783,7 @@ document.getElementById("suggestBtn").addEventListener("click", () => {
 function goHome() {
   window.location.href = "/";
 }
+
 if ('serviceWorker' in navigator) {
   navigator.serviceWorker.register("{% static 'pwa/service-worker.js' %}");
 }
