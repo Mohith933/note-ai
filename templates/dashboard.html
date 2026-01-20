@@ -1427,49 +1427,55 @@
             document.getElementById("workspaceView").classList.add("active");
         }
 
+        function capitalizeFirst(str) {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+}
+
+let typingInterval = null;
+let isWriting = false;
+let generatedTool = null;
+let lastGeneratedText = "";
+let hasGeneratedContent = false;
+
+
         // 🔙 Go back and save current state (only if not viewing an old one)
         function goBack() {
-         openTool('Dashboard');
-
-            // Set sidebar active state
-            const dashboardLink = document.getElementById('menu-dashboard');
-            if (dashboardLink) {
-                setActiveMenu(dashboardLink);
-            }
     const state = document.getElementById("state");
     const isViewingRecent = state.dataset.viewing === "true";
 
-    const hasValidContent =
-        hasGeneratedContent &&
-        lastGeneratedText &&
-        !isViewingRecent;
-
-    if (hasValidContent) {
-        const currentTool = document.getElementById("toolTitle").innerText.trim();
-        saveRecent(currentTool);
-        hasGeneratedContent = false;
-        lastGeneratedText = "";
-    }
-
-    // NOW stop typing
+    // 1️⃣ STOP typing FIRST
     if (typingInterval) {
         clearInterval(typingInterval);
         typingInterval = null;
     }
     isWriting = false;
 
+    // 2️⃣ SAVE ONLY IF GENERATED (and not viewing old)
+    if (hasGeneratedContent && lastGeneratedText && !isViewingRecent && generatedTool) {
+        saveRecent(capitalizeFirst(generatedTool));
+    }
+
+    // 3️⃣ RESET generation state
+    hasGeneratedContent = false;
+    lastGeneratedText = "";
+    generatedTool = null;
+
+    // 4️⃣ RESET flags
     state.dataset.blocked = "false";
     state.dataset.viewing = "false";
 
+    // 5️⃣ SWITCH UI
     openTool("Dashboard");
+
+    const dashboardLink = document.getElementById("menu-dashboard");
+    if (dashboardLink) setActiveMenu(dashboardLink);
+
     document.getElementById("workspaceView").classList.remove("active");
     document.getElementById("libraryView").style.display = "block";
+
     showRecents();
 }
-let typingInterval = null;
-let isWriting = false;
-let lastGeneratedText = "";
-let hasGeneratedContent = false;
+
 function emotionalTypeWrite(text, elementId, depth, onComplete) {
     const el = document.getElementById(elementId);
     el.innerHTML = "";
@@ -1505,8 +1511,8 @@ function emotionalTypeWrite(text, elementId, depth, onComplete) {
     const name = document.getElementById("nameInput").value.trim();
     const desc = document.getElementById("descInput").value.trim();
     const depth = document.getElementById("depthInput").value;
-    const mode = document.getElementById("toolTitle").innerText.toLowerCase();
-
+    const mode = document.getElementById("toolTitle").innerText.trim().toLowerCase();
+    generatedTool = mode; // ✅ LOCK TOOL HERE
     if (!name && !desc) {
         alert("Please write something.");
         isWriting = false;
@@ -1536,8 +1542,8 @@ function emotionalTypeWrite(text, elementId, depth, onComplete) {
         state.dataset.blocked = (blocked || isFallback) ? "true" : "false";
 
         const text = data.response.response.trim();
-lastGeneratedText = text;
-hasGeneratedContent = true; // ✅ IMPORTANT
+        lastGeneratedText = text;
+        hasGeneratedContent = true; // ✅ IMPORTANT
         emotionalTypeWrite(text, "output", depth, () => {
             isWriting = false;
         });
