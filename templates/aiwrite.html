@@ -4,7 +4,7 @@
   <meta charset="utf-8" />  
   <meta name="viewport" content="width=device-width,initial-scale=1" />  
   <link rel="icon" type="image/x-icon" href="{% static 'icons/favicon.ico' %}">
-  <title>NoteAI —  Meeting Notes Assistant</title>  
+  <title>MeetScribe AI —  Meeting Notes Assistant</title>  
   
   <!-- Quicksand (Google Fonts) -->  
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">  
@@ -272,12 +272,12 @@ body.dark {
   </style>  
 </head>  
 <body>  
-  <div class="app" role="application" aria-label="NoteAI">   
+  <div class="app" role="application" aria-label="MeetScribe AI">   
   <div class="header">    
     <div class="brand" aria-hidden="true">    
       <div class="heart">📝</div>
 <div>
-  <div style="font-size:1.05rem">NoteAI</div>
+  <div style="font-size:1.05rem">MeetScribe AI</div>
   <div style="font-size:0.78rem; color:var(--accent); margin-top:4px">
     Meeting Notes Assistant
   </div>
@@ -516,7 +516,7 @@ generateBtn.addEventListener("click", async () => {
   // Convert emotion slider → tone keyword
   const tone = getToneFromEmotion(emotion);
 
-  outputBox.innerHTML = "⏳ Generating...";
+ outputBox.innerHTML = "Structuring your meeting...";
 
 
   try {
