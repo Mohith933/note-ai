@@ -1,191 +1,259 @@
-import os
+import requests
 from datetime import datetime
-import google.generativeai as genai
+import os
 
-genai.configure(api_key=os.getenv("GEMINI_API_KEY"))
+GEMINI_API_KEY=your_api_key_here
 
-model = genai.GenerativeModel("gemini-2.5-flash")
 
 # ------------------------------------------
 # TONE STYLES
 # ------------------------------------------
-DETAIL_MAP = {
-    "soft": "concise and brief",
-    "balanced": "clear and structured",
-    "deep": "detailed and comprehensive"
+TONE_MAP = {
+    "soft": "Use short sentences. Use simple words. Keep emotions light and calm.",
+    "balanced": "Use clear and direct sentences. Stay grounded. No dramatic language.",
+    "deep": "Use short sentences. Mention one physical reaction (e.g., heavy chest, quiet room). Avoid abstract words."
 }
 
 
-SUMMARY_TEMPLATE = """
-You are a professional meeting assistant.
 
-Convert the following raw notes into a structured summary.
 
-STRICT RULES:
-- Clear headings
-- Bullet points where necessary
-- No emojis
-- Professional tone
-- Detail level: {detail}
-
-Input:
-{text}
-
-Output format:
-
-Meeting Summary
-Key Points:
-- ...
-
-Decisions:
-- ...
-
-Action Items:
-- ...
-"""
-
-KEYPOINTS_TEMPLATE = """
-Extract only the key discussion points.
-
-STRICT RULES:
-- Bullet format
-- No explanations
-- No emojis
-- Detail level: {detail}
-
-Input:
-{text}
-"""
-
-ACTION_TEMPLATE = """
-Identify actionable tasks from the discussion.
-
-STRICT RULES:
-- Bullet format
-- Each bullet must include responsible person if mentioned
-- No emojis
-- Detail level: {detail}
-
-Input:
-{text}
-"""
-
-MINUTES_TEMPLATE = """
-Create formal meeting minutes.
-
-STRICT RULES:
-- Include Date (today)
-- Structured sections
-- Professional tone
-- Detail level: {detail}
-
-Input:
-{text}
-"""
-
-BRAINSTORM_TEMPLATE = """
-Organize brainstorming ideas clearly.
-
-STRICT RULES:
-- Group similar ideas
-- Bullet format
-- No emojis
-- Detail level: {detail}
-
-Input:
-{text}
-"""
 
 
 # ------------------------------------------
-# LLM SERVICE (LOCAL OLLAMA + SAFE FALLBACK)
+# TEMPLATES
 # ------------------------------------------
+
+LETTER_TEMPLATE = """
+Letter
+
+Write a short personal letter based only on this real event:
+
+{content}
+
+STRICT RULES:
+- 50–60 words only
+- Exactly 3–4 sentences
+- Do NOT invent new characters or events
+- Focus only on the writer's internal feeling
+- If the input is vague, do not invent details. Keep it simple.
+- No advice
+- No life lessons
+- No clichés
+- Tone style: {tone}
+
+Format:
+
+Dear You,
+"""
+
+
+
+
+
+
+JOURNAL_TEMPLATE = """
+Journal
+
+Write a personal journal entry about this real event:
+{content}
+
+STRICT RULES:
+- 50–70 words only
+- Exactly 4–6 sentences
+- Mention one specific detail from the moment
+- No advice
+- No philosophy
+- If the input is vague, keep it general and do not invent events
+- Tone style: {tone}
+- Simple, honest English
+
+Format:
+
+Date: {date}
+Write as if this happened today.
+"""
+
+
+
+
+POEM_TEMPLATE = """
+Poem
+
+Write a short emotional poem based only on:
+{content}
+
+STRICT RULES:
+- Exactly 4 short lines
+- Use concrete words (hands, room, chair, rain, glass)
+- No rhyming
+- No abstract philosophy
+- If input is vague, keep imagery simple
+- Tone style: {tone}
+
+Respond ONLY with the poem.
+"""
+
+
+REFLECTION_TEMPLATE = """
+Reflection
+
+Write a personal reflection based strictly on this real moment:
+{content}
+
+STRICT RULES:
+- 40–60 words only
+- Exactly 3–5 sentences
+- Mention one concrete detail
+- No advice
+- No life lessons
+- No general statements about life
+- If input is vague, do not invent events
+- Tone style: {tone}
+
+Respond ONLY with the reflection.
+"""
+
+
+
+STORY_TEMPLATE = """
+Story
+
+Write a very short emotional story based only on:
+{content}
+
+STRICT RULES:
+- Exactly 2–3 sentences
+- Focus on one small physical action
+- No moral lesson
+- No philosophical ending
+- If input is vague, keep it minimal
+- Tone style: {tone}
+
+Respond ONLY with the story.
+"""
+
+
+
+
+
 # ------------------------------------------
-# LLM SERVICE (GEMINI CLOUD)
+# LLM SERVICE (GEMINI ONLY)
 # ------------------------------------------
 class LLM_Service:
 
     def __init__(self):
-        self.model = model  # using global Gemini model
+        pass
 
     # -------------------------
-    # Fallback
+    # Gemini API call
     # -------------------------
-    def get_fallback(self):
-        return "⚠️ AI service temporarily unavailable. Please try again shortly."
+        def call_gemini(self, prompt):
+            api_key = os.getenv("GEMINI_API_KEY")
+            url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
+            headers = {
+            "Content-Type": "application/json"
+               }
+            payload = {
+            "contents": [
+                {
+                    "parts": [
+                        {"text": prompt}
+                    ]
+                }
+            ],
+                "generationConfig": {
+                "temperature": 0.5,
+                "topP": 0.9,
+                "maxOutputTokens": 300
+              }
+            }
+            try:
+                response = requests.post(url, headers=headers, json=payload)
+                data = response.json()
+                return data["candidates"][0]["content"]["parts"][0]["text"].strip()
+            except Exception as e:
+                return f"⚠️ Gemini error: {str(e)}"
+
+
 
     # -------------------------
-    # Main generator
+    # Router
     # -------------------------
-    def generate(self, mode, text, tone="balanced"):
+    def generate(self, mode, text, tone="soft"):
+        tone_style = TONE_MAP.get(tone, TONE_MAP["soft"])
         mode = mode.lower().strip()
-        detail_style = DETAIL_MAP.get(tone, DETAIL_MAP["balanced"])
 
-        # Safety check
-        safe, safe_response = self.safety_filter(text)
+        # Select template
+        prompt = self.build_prompt(mode, text, tone_style)
+        safe, result = self.safety_filter(text)
         if not safe:
-            return safe_response
+            return result
 
-        prompt = self.build_prompt(mode, text, detail_style)
-        if not prompt:
+
+        if prompt is None:
             return "⚠️ Unknown mode."
+        return self.call_gemini(prompt)
 
-        try:
-            response = self.model.generate_content(prompt)
-            if not response or not response.text:
-                return self.get_fallback()
-            return response.text.strip()
-        except Exception as e:
-            print("Gemini error:", e)
-            return self.get_fallback()
 
     # -------------------------
-    # Prompt builder
+    # Template selection
     # -------------------------
-    def build_prompt(self, mode, text, detail):
+    def build_prompt(self, mode, text, tone):
+        if mode == "letter":
+            return LETTER_TEMPLATE.format(content=text, tone=tone)
+        
+        
 
-        if mode == "summary":
-            return SUMMARY_TEMPLATE.format(text=text, detail=detail)
+        elif mode == "journal":
+            date_str = datetime.now().strftime("%d/%m/%Y")
+            return JOURNAL_TEMPLATE.format(date=date_str, content=text, tone=tone)
 
-        if mode == "keypoints":
-            return KEYPOINTS_TEMPLATE.format(text=text, detail=detail)
+        elif mode == "poem":
+            return POEM_TEMPLATE.format(content=text, tone=tone)
+        elif mode == "reflection":
+            return REFLECTION_TEMPLATE.format(content=text, tone=tone)
 
-        if mode == "action":
-            return ACTION_TEMPLATE.format(text=text, detail=detail)
-
-        if mode == "minutes":
-            return MINUTES_TEMPLATE.format(text=text, detail=detail)
-
-        if mode == "brainstorm":
-            return BRAINSTORM_TEMPLATE.format(text=text, detail=detail)
-
+        elif mode == "story":
+            return STORY_TEMPLATE.format(content=text, tone=tone)
         return None
+    
 
-    # -------------------------
-    # Safety filter
-    # -------------------------
     def safety_filter(self, text):
-        t = text.lower().strip()
+        text_lower = text.lower().strip()
 
+    # --------------------------------------
+    # BAD WORD BLOCK
+    # --------------------------------------
         bad_words = [
             "fuck", "bitch", "shit", "asshole",
             "bastard", "slut", "dick", "pussy",
-            "kill you", "hurt you"
+            "kill you", "hurt you"  # generic abuse
         ]
         for w in bad_words:
-            if w in t:
-                return False, "⚠️ Please rewrite your text using respectful language."
+            if w in text_lower:
+                return False, "⚠️ Your input contains unsafe or harmful language. Please rewrite it more respectfully."
 
         selfharm_patterns = [
-            "kill myself", "kill me", "i want to die",
-            "end my life", "i want to disappear",
-            "self harm", "i can't live", "no reason to live"
-        ]
-        for p in selfharm_patterns:
-            if p in t:
+        "kill myself",
+        "kill me",
+        "i want to die",
+        "end my life",
+        "i want to disappear",
+        "i hurt myself",
+        "self harm",
+        "i can't live",
+        "no reason to live",
+    ]
+        for pattern in selfharm_patterns:
+            if pattern in text_lower:
                 return False, (
-                    "⚠️ This system cannot process this request.\n\n"
-                    "If you're struggling, please consider reaching out to someone you trust."
-                )
-
+                "⚠️ HeartNote AI cannot continue this request.\n"
+                "You are feeling something heavy.\n"
+                "Here is a gentle, safe message instead:\n\n"
+                "• You deserve care.\n"
+                "• You are not alone.\n"
+                "• Your feelings matter.\n"
+            )
+            
         return True, text
+
