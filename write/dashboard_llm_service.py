@@ -11,9 +11,9 @@ GEMINI_MODEL = "gemini-2.5-flash"
 # TONE DEPTH MAP
 # -----------------------------------------------------
 DEPTH_TONE = {
-    "light": "simple, gentle, easy-to-understand emotional language",
-    "medium": "clear, honest, emotionally calm language",
-    "deep": "deep but simple emotions, clear words, no complex vocabulary"
+    "light": "gentle and simple",
+    "medium": "clear and calm",
+    "deep": "emotionally intense but concrete"
 }
 
 SUPPORTED_LANGUAGES = {
@@ -29,297 +29,148 @@ SUPPORTED_LANGUAGES = {
 # -----------------------------------------------------
 
 DASHBOARD_REFLECTION = """
-You are HeartNote Reflection Writer.
+Write a simple emotional reflection in {language}.
 
-Write the response in {language}.
+Topic: {name}
+Feeling: {desc}
+Style: {tone}
 
-Write a simple, emotional reflection that feels human and relatable.
-
-INPUT:
-- Topic: {name}
-- Feeling: {desc}
-- Tone: {tone}
-
-RULES:
+Rules:
 - Two paragraphs
-- Paragraph 1: 25–35 words
-- Paragraph 2: 15–25 words
-- Use simple, clear language
--If the input is vague, do not invent new events.
-Keep the writing simple and general.
--- Do not include realizations or life conclusions.
-- Focus only on the moment.
-- Avoid complex or poetic vocabulary
-- Emotional but natural tone
-- Do NOT use phrases like:
-  “special moment”
-  “meant a lot”
-  “deeply moved”
-  “everything happens for a reason”
-  “ups and downs”
-- Use specific actions or details instead.
-- No advice
-- No motivation
-- No emojis
+- 40–55 words total
+- Focus only on the moment
+- No advice or life lessons
+- No dramatic language
 
-Generate only the reflection.
+Return only the reflection.
 """
 
 
 DASHBOARD_LETTER = """
-You are HeartNote Letter Writer.
+Write a short emotional letter in {language}.
 
-Write the response in {language}.
-
-INPUT:
 Recipient: {name}
 Feeling: {desc}
-Tone depth: {tone}
+Style: {tone}
 
-RULES:
-- Write exactly 2 paragraphs
-- Paragraph 1: 25–35 words
-- Paragraph 2: 15–25 words
-- Use simple, clear emotional language
-- Gentle and honest tone
-- Avoid dramatic phrases.
-- Avoid emotional clichés.
-- Emotional but natural, not dramatic
-- Avoid complex or rare words
--If the input is vague, do not invent new events.
-Keep the writing simple and general.
-- No advice
-- No moralizing
-- Do NOT use phrases like:
-  “special moment”
-  “meant a lot”
-  “deeply moved”
-  “everything happens for a reason”
-  “ups and downs”
-- Use specific actions or details instead.
-- No judgement
-- No motivational tone
-- No lists
-- No emojis
+Rules:
+- Two short paragraphs
+- 40–55 words total
+- Simple, honest language
+- No advice or moral tone
 
-Format:
 Start with:
-Dear,
+Dear {name},
 """
 
 
 
 
 DASHBOARD_POEM = """
-You are HeartNote Poem Writer.
+Write a short free-verse poem in {language}.
 
-Write the response in {language}.
-
-Write a gentle emotional poem inspired by:
+Inspired by:
 {name} — {desc}
+Style: {tone}
 
-RULES:
+Rules:
 - 5–7 short lines
-- Free verse
-- Calm, emotional, human language
-- Focus on feeling, not explanation
+- Concrete imagery
 - No advice
-- Use physical images (hands, room, light, chair, rain)
-- Avoid abstract words like destiny, forever, soul, heartache.
--If the input is vague, do not invent new events.
-Keep the writing simple and general.
-- Do NOT use phrases like:
-  “special moment”
-  “meant a lot”
-  “deeply moved”
-  “everything happens for a reason”
-  “ups and downs”
-- Use specific actions or details instead.
-- No motivation
-- No emojis
+- No abstract philosophy
 
-Generate only the poem.
+Return only the poem.
 """
 
 
 
 DASHBOARD_STORY = """
-You are HeartNote Story Writer.
+Write a short emotional micro-story in {language}.
 
-Write the response in {language}.
-
-Write a short emotional micro-story inspired by:
+Inspired by:
 {name} — {desc}
+Style: {tone}
 
-RULES:
-- 45–70 words
+Rules:
+- 45–65 words
 - One emotional moment
-- Simple, human language
-- Do NOT use phrases like:
-  “special moment”
-  “meant a lot”
-  “deeply moved”
-  “everything happens for a reason”
-  “ups and downs”
-- Use specific actions or details instead.
-- Soft emotional ending
-- End with a small physical detail instead of a life conclusion.
--If the input is vague, do not invent new events.
-Keep the writing simple and general.
-- No advice
-- No lessons
-- No emojis
+- End with a small physical detail
+- No moral or lesson
 
-Generate only the story.
+Return only the story.
 """
 
 
 
 DASHBOARD_QUOTE = """
-You are HeartNote Quote Writer.
+Write one emotional sentence in {language}.
 
-Write the response in {language}.
-
-Write a short emotional quote inspired by:
+Inspired by:
 {name} — {desc}
 
-RULES:
-- One sentence only
+Rules:
 - Under 20 words
-- Simple, emotional, human
-- No advice
-- Avoid motivational tone.
-- Avoid life lessons.
-- No universal statements about life.
--If the input is vague, do not invent new events.
-Keep the writing simple and general.
-- Do NOT use phrases like:
-  “special moment”
-  “meant a lot”
-  “deeply moved”
-  “everything happens for a reason”
-  “ups and downs”
-- Use specific actions or details instead.
-- No motivation
-- No emojis
+- Simple and human
+- No advice or motivational tone
 
-Generate only the quote.
+Return only the sentence.
 """
 
 
 
 DASHBOARD_AFFIRMATION = """
-You are HeartNote Affirmation Writer.
+Write a gentle affirmation in {language}.
 
-Write the response in {language}.
-
-Write a gentle emotional affirmation inspired by:
+Inspired by:
 {name} — {desc}
 
-RULES:
-- 1–2 short lines only
-- State-of-being statements only (e.g., I am…, I feel…, I exist…)
+Rules:
+- 1–2 short lines
+- Present tense only (I am…, I feel…)
 - No advice
-- Use simple, clear language
-- Do NOT use phrases like:
-  “special moment”
-  “meant a lot”
-  “deeply moved”
-  “everything happens for a reason”
-  “ups and downs”
-- Use specific actions or details instead.
+- No future focus
 
-- No motivation
-- Avoid future growth language.
-- Stay in present emotional state only.
--If the input is vague, do not invent new events.
-Keep the writing simple and general.
-- No future instruction
-- No imperatives
-- Soft, reassuring presence
-- Emojis NOT allowed
-
-
-Generate only the affirmation.
+Return only the affirmation.
 """
-
 
 
 
 DASHBOARD_NOTE = """
-You are HeartNote Note Writer.
+Write a short reflective note in {language}.
 
-Write the response in {language}.
-
-Context:
 Feeling: {desc}
 
-RULES:
-- Use EXACT bullet format
-- Use simple, clear language
-- Neutral, reflective language
-- Do NOT use phrases like:
-  “special moment”
-  “meant a lot”
-  “deeply moved”
-  “everything happens for a reason”
-  “ups and downs”
-- Use specific actions or details instead.
--If the input is vague, do not invent new events.
-Keep the writing simple and general.
+Format exactly:
+
+• What you felt: ...
+• Why it happened: ...
+• What could help: ...
+
+Rules:
+- Neutral tone
 - No advice
-- No commands
-- No emojis
+- Simple language
 - No extra text
-
-Format ONLY:
-
-• What you felt: {desc}
-• Why it happened: one calm, neutral reason
-• What could help: one neutral observation (not advice)
-
 """
-
 
 
 
 
 DASHBOARD_JOURNAL = """
-You are HeartNote Journal Writer.
+Write a calm journal entry in {language}.
 
-Write the response in {language}.
+Topic: {name}
+Feeling: {desc}
+Style: {tone}
 
-Write a calm emotional journal entry.
+Rules:
+- Two paragraphs
+- 40–55 words total
+- Reflective and neutral
+- No advice or lessons
 
-INPUT:
-- Topic/person: {name}
-- Feeling: {desc}
-
-RULES:
-- Write exactly 2 paragraphs
-- Paragraph 1: 25–35 words
-- Paragraph 2: 15–25 words
--If the input is vague, do not invent new events.
-Keep the writing simple and general.
-- Do NOT use phrases like:
-  “special moment”
-  “meant a lot”
-  “deeply moved”
-  “everything happens for a reason”
-  “ups and downs”
-- Use specific actions or details instead.
-- Do not begin with “Today was…”
-- Reflective, neutral tone
-- No advice
-- No lessons
-- No emojis
-- No signature
-
-Format:
+Start with:
 Date: {date}
-
-<journal entry>
-
 """
 
 
@@ -389,7 +240,7 @@ class Dashboard_LLM_Service:
             "generationConfig": {
                 "temperature": 0.6,
                 "topP": 0.9,
-                "maxOutputTokens": 400
+                "maxOutputTokens": 500
             }}
             res = requests.post(url, headers=headers, json=payload, timeout=30)
             res.raise_for_status()
