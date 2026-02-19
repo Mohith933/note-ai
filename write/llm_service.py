@@ -2,7 +2,6 @@ import requests
 from datetime import datetime
 import os
 import time
-from collections import defaultdict
 
 
 
@@ -145,16 +144,14 @@ class LLM_Service:
     def __init__(self):
         pass
 
-    # -------------------------
-    # Gemini API call
-    # -------------------------
-        def call_gemini(self, prompt):
-            api_key = os.getenv("GEMINI_API_KEY")
-            url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
-            headers = {
+ 
+    def call_gemini(self, prompt):
+        api_key = os.getenv("GEMINI_API_KEY")
+        url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={api_key}"
+        headers = {
             "Content-Type": "application/json"
                }
-            payload = {
+        payload = {
             "contents": [
                 {
                     "parts": [
@@ -168,18 +165,13 @@ class LLM_Service:
                 "maxOutputTokens": 300
               }
             }
-            try:
-                response = requests.post(url, headers=headers, json=payload)
-                data = response.json()
-                return data["candidates"][0]["content"]["parts"][0]["text"].strip()
-            except Exception as e:
-                return f"⚠️ Gemini error: {str(e)}"
-
-
-
-    # -------------------------
-    # Router
-    # -------------------------
+        try:
+            response = requests.post(url, headers=headers, json=payload)
+            data = response.json()
+            return data["candidates"][0]["content"]["parts"][0]["text"].strip()
+        except Exception as e:
+            return f"⚠️ Gemini error: {str(e)}"
+    
     def generate(self, mode, text, tone="soft"):
         tone_style = TONE_MAP.get(tone, TONE_MAP["soft"])
         mode = mode.lower().strip()
@@ -257,4 +249,3 @@ class LLM_Service:
             )
             
         return True, text
-
