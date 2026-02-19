@@ -9,9 +9,9 @@ import time
 # TONE STYLES
 # ------------------------------------------
 TONE_MAP = {
-    "soft": "Use short sentences. Use simple words. Keep emotions light and calm.",
-    "balanced": "Use clear and direct sentences. Stay grounded. No dramatic language.",
-    "deep": "Use short sentences. Mention one physical reaction (e.g., heavy chest, quiet room). Avoid abstract words."
+    "soft": "Gentle, calm, simple sentences.",
+    "balanced": "Clear, grounded, direct.",
+    "deep": "Short sentences. One physical detail. Concrete words."
 }
 
 
