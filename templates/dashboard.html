@@ -796,6 +796,15 @@
             color: var(--text);
         }
 
+        .recent-text .preview{
+            margin:0;
+            display: flex;
+            font-size:0.7rem;
+            flex-direction: column;
+            font-weight:300;
+            color:var(--text);
+        }
+
         .recent-text small {
             color: var(--text);
             font-size: 0.8em;
@@ -1374,8 +1383,8 @@ It guides you through moments, reactions, and reflections — so your words feel
                 id: Date.now(),
                 name: toolName,
                 icon: getToolIcon(toolName),
-                preview: generatedText.substring(0, 60) + "...",
                 time: new Date().toLocaleString(),
+                preview: lastGeneratedText.substring(0, 60) + "...",
                 nameInput: document.getElementById("nameInput").value,
                 descInput: document.getElementById("descInput").value,
                 depthInput: document.getElementById("depthInput").value,
